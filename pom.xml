@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.upuphub.trochilidae</groupId>
+    <artifactId>trochilidae-root</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Trochilidae :: Root</name>
+
+    <description>
+        一个基于 Netty 编写的轻量且高性能的 HTTP 服务器,无需额外依赖其他的 WEB 服务器
+    </description>
+
+    <properties>
+        <jackson-version>2.11.3</jackson-version>
+        <netty-version>4.1.53.Final</netty-version>
+        <slf4j-version>1.7.30</slf4j-version>
+        <reflections-version>0.9.12</reflections-version>
+        <cglib-version>3.3.0</cglib-version>
+        <commons-codec-version>1.15</commons-codec-version>
+
+    </properties>
+
+    <modules>
+        <module>core</module>
+        <module>security</module>
+        <module>security</module>
+    </modules>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 网络: Netty -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty-version}</version>
+            </dependency>
+
+            <!-- Json解析库：jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+
+            <!--   编解码    -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec-version}</version>
+            </dependency>
+
+            <!-- LOG日志:SLF4J -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j-version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- 注解扫描:Reflections -->
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections-version}</version>
+            </dependency>
+
+            <!-- 动态代理:Cglib -->
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib-version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>
