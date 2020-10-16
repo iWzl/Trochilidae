@@ -1,7 +1,7 @@
 package com.upuphub.trochilidae.core.exception;
 
 /**
- * @author leo
+ * @author Leo Wang
  */
 public abstract class TrochilidaeRuntimeException extends RuntimeException{
     public TrochilidaeRuntimeException() {
