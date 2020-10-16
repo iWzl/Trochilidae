@@ -10,6 +10,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -27,16 +34,56 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/core/src/main/java/com/upuphub/trochilidae/core/annotation" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/core/src/main/java/com/upuphub/trochilidae/core/annotation" />
+      <recent name="$PROJECT_DIR$/core/src/main/java/com/upuphub/trochilidae/core/annotation/aop" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.upuphub.trochilidae.core.common.util" />
+      <recent name="com.upuphub.trochilidae.core.common.constant" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TrochilidaeExampleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.upuphub.trochilidae.example.TrochilidaeExampleApplication" />
+      <module name="trochilidae-example" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.upuphub.trochilidae.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TrochilidaeExampleApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -48,7 +95,7 @@
       <updated>1602771728543</updated>
       <workItem from="1602771730247" duration="713000" />
       <workItem from="1602772473832" duration="93000" />
-      <workItem from="1602772602231" duration="3207000" />
+      <workItem from="1602772602231" duration="9425000" />
     </task>
     <servers />
   </component>
@@ -63,17 +110,57 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="328" y="106" key="#Project_Structure/0.0.1680.1050@0.0.1680.1050" timestamp="1602772412012" />
+    <state x="653" y="235" key="#com.intellij.ide.util.MemberChooser" timestamp="1602820667877">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="653" y="235" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1602820667877" />
+    <state width="864" height="646" key="DebuggerActiveHint" timestamp="1602827165253">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="864" height="646" key="DebuggerActiveHint/0.0.1680.1050@0.0.1680.1050" timestamp="1602827165253" />
     <state x="706" y="433" width="479" height="240" key="Github.ShareDialog" timestamp="1602775776642">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="706" y="433" width="479" height="240" key="Github.ShareDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1602775776642" />
+    <state width="1638" height="358" key="GridCell.Tab.0.bottom" timestamp="1602827618760">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="358" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1602827618760" />
+    <state width="1638" height="358" key="GridCell.Tab.0.center" timestamp="1602827618758">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="358" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1602827618758" />
+    <state width="1638" height="358" key="GridCell.Tab.0.left" timestamp="1602827618757">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="358" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1602827618757" />
+    <state width="1638" height="358" key="GridCell.Tab.0.right" timestamp="1602827618759">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="358" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1602827618759" />
+    <state width="1638" height="358" key="GridCell.Tab.1.bottom" timestamp="1602827618764">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="358" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1602827618764" />
+    <state width="1638" height="358" key="GridCell.Tab.1.center" timestamp="1602827618762">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="358" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1602827618762" />
+    <state width="1638" height="358" key="GridCell.Tab.1.left" timestamp="1602827618761">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="358" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1602827618761" />
+    <state width="1638" height="358" key="GridCell.Tab.1.right" timestamp="1602827618763">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="358" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1602827618763" />
     <state x="341" y="164" key="SettingsEditor" timestamp="1602775844063">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1602775844063" />
-    <state x="474" y="102" key="new project wizard" timestamp="1602775632508">
+    <state x="474" y="102" key="new project wizard" timestamp="1602821663279">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="474" y="102" key="new project wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1602775632508" />
+    <state x="474" y="102" key="new project wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1602821663279" />
   </component>
 </project>

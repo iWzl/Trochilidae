@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="trochilidae-security" />
+        <module name="trochilidae-example" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Trochilidae" target="1.5" />
       <module name="Trochilidae :: Security" target="1.5" />
-      <module name="trochilidae-core" target="1.5" />
+      <module name="trochilidae-core" target="7" />
+      <module name="trochilidae-example" target="1.5" />
       <module name="trochilidae-security" target="1.5" />
     </bytecodeTargetLevel>
   </component>
