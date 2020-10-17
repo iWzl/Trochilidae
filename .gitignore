@@ -5,3 +5,7 @@
 .idea/
 
 target/
+
+*/target/
+
+*/*.iml
