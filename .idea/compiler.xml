@@ -13,7 +13,7 @@
     <bytecodeTargetLevel>
       <module name="Trochilidae" target="1.5" />
       <module name="Trochilidae :: Security" target="1.5" />
-      <module name="trochilidae-core" target="7" />
+      <module name="trochilidae-core" target="8" />
       <module name="trochilidae-example" target="1.5" />
       <module name="trochilidae-security" target="1.5" />
     </bytecodeTargetLevel>

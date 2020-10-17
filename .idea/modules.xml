@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Trochilidae.iml" filepath="$PROJECT_DIR$/.idea/Trochilidae.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/trochilidae-core.iml" filepath="$PROJECT_DIR$/core/trochilidae-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/trochilidae-example/trochilidae-example.iml" filepath="$PROJECT_DIR$/trochilidae-example/trochilidae-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/trochilidae-example.iml" filepath="$PROJECT_DIR$/example/trochilidae-example.iml" />
       <module fileurl="file://$PROJECT_DIR$/security/trochilidae-security.iml" filepath="$PROJECT_DIR$/security/trochilidae-security.iml" />
     </modules>
   </component>
