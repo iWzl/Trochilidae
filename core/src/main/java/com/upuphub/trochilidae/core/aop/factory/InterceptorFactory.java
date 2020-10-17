@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * 存放所有拦截器的工厂类
  *
  * @author shuang.kou
- * @createTime 2020年10月09日 22:24:00
+ * @date 2020年10月09日 22:24:00
  **/
 public class InterceptorFactory {
     private static List<Interceptor> interceptors = new ArrayList<>();
