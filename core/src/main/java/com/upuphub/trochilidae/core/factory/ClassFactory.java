@@ -26,5 +26,6 @@ public class ClassFactory {
 
     public static void loadClass(String packageName) {
         CLASSES.putAll(ReflectionUtil.scanAnnotatedClasses(packageName,RestController.class,Aspect.class,Component.class));
+        System.out.println();
     }
 }
