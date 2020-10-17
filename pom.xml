@@ -28,7 +28,7 @@
     <modules>
         <module>core</module>
         <module>security</module>
-        <module>security</module>
+        <module>example</module>
     </modules>
 
 
