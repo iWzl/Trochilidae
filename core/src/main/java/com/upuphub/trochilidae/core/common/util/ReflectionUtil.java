@@ -34,7 +34,7 @@ public class ReflectionUtil {
     public static Set<Class<?>> scanAnnotatedClass(String packageName, Class<? extends Annotation> annotation) {
         Reflections reflections = new Reflections(packageName, new TypeAnnotationsScanner());
         Set<Class<?>> annotatedClass = reflections.getTypesAnnotatedWith(annotation, true);
-        logger.info("The number of class Annotated with  @{} :[{}]",annotation.getSimpleName(),annotatedClass.size());
+        logger.debug("The number of class Annotated with  @{} :[{}]",annotation.getSimpleName(),annotatedClass.size());
         return annotatedClass;
     }
 
@@ -123,7 +123,11 @@ public class ReflectionUtil {
         try {
             // invoke target method through reflection
             result = method.invoke(targetObject, args);
-            logger.info("invoke target method successfully ,result is: [{}]", result.toString());
+            if(Void.class != method.getReturnType()){
+                logger.debug("invoke target method successfully");
+            }else {
+                logger.debug("invoke target method successfully ,result is: [{}]", result.toString());
+            }
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new CanNotInvokeTargetMethodException(e.toString());
         }

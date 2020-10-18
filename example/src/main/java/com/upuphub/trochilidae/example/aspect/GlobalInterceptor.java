@@ -5,7 +5,7 @@ import com.upuphub.trochilidae.core.aop.intercept.MethodInvocation;
 
 /**
  * @author shuang.kou
- * @createTime 2020年10月09日 21:28:00
+ * @date  Time 2020年10月09日 21:28:00
  **/
 public class GlobalInterceptor extends Interceptor {
     @Override
@@ -14,5 +14,10 @@ public class GlobalInterceptor extends Interceptor {
         Object result = methodInvocation.proceed();
         System.out.println(GlobalInterceptor.class.getSimpleName() + " after method：" + methodInvocation.getTargetMethod().getName());
         return result;
+    }
+
+    @Override
+    public boolean supports(Object bean) {
+        return true;
     }
 }
