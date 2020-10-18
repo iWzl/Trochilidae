@@ -22,18 +22,26 @@
         <reflections-version>0.9.12</reflections-version>
         <cglib-version>3.3.0</cglib-version>
         <commons-codec-version>1.15</commons-codec-version>
-
+        <trochilidae-version>1.0-SNAPSHOT</trochilidae-version>
     </properties>
 
     <modules>
         <module>core</module>
         <module>security</module>
         <module>example</module>
+        <module>web</module>
     </modules>
 
 
     <dependencyManagement>
         <dependencies>
+            <!-- trochilidae: core ioc-->
+            <dependency>
+                <groupId>com.upuphub.trochilidae</groupId>
+                <artifactId>trochilidae-core</artifactId>
+                <version>${trochilidae-version}</version>
+            </dependency>
+
             <!-- 网络: Netty -->
             <dependency>
                 <groupId>io.netty</groupId>

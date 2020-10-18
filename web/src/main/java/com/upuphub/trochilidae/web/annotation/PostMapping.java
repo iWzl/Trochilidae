@@ -1,10 +1,13 @@
-package com.upuphub.trochilidae.core.annotation.springmvc;
+package com.upuphub.trochilidae.web.annotation;
 
 import java.lang.annotation.*;
 
+
 /**
- * @author shuang.kou
- * @createTime 2020年09月24日 14:46:00
+ * Post 请求的相关Map映射
+ *
+ * @author Inspiration S.P.A Leo
+ * @date create time 2020-10-17 18:33
  **/
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

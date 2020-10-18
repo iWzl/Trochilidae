@@ -11,6 +11,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,17 +44,16 @@ public class ReflectionUtil {
      * scan the classes marked by the specified annotation in the specified package
      *
      * @param packageName specified package name
-     * @param annotations  specified annotation
+     * @param annotationList  specified annotation
      * @return the classes marked by the specified annotation in the specified package
      */
-    @SafeVarargs
-    public static Map<Class<? extends Annotation>,Set<Class<?>>> scanAnnotatedClasses(String packageName, Class<? extends Annotation>... annotations) {
-        if(null == packageName || null == annotations || "".equals(packageName) || 0 == annotations.length){
+    public static Map<Class<? extends Annotation>,Set<Class<?>>> scanAnnotatedClasses(String packageName, Set<Class<? extends Annotation>> annotationList) {
+        if(null == packageName || null == annotationList || "".equals(packageName) || 0 == annotationList.size()){
             throw new CheckClassScanParamsException("Not find scan the classes Params");
         }
         Reflections reflections = new Reflections(packageName, new TypeAnnotationsScanner());
-        Map<Class<? extends Annotation>,Set<Class<?>>> annotatedClassesMap = new ConcurrentHashMap<>(annotations.length);
-        for (Class<? extends Annotation> annotation : annotations) {
+        Map<Class<? extends Annotation>,Set<Class<?>>> annotatedClassesMap = new ConcurrentHashMap<>(annotationList.size());
+        for (Class<? extends Annotation> annotation : annotationList) {
             Set<Class<?>> annotatedClass = reflections.getTypesAnnotatedWith(annotation, true);
             if(!annotatedClass.isEmpty()){
                 logger.debug("The number of class Annotated with  @{} :[{}]",annotation.getSimpleName(),annotatedClass.size());
