@@ -56,6 +56,7 @@ public class RouteMethodMapper {
                     if(null == annotations ||0 == annotations.length){
                         continue;
                     }
+                    method.isAnnotationPresent(RequestMapping.class);
                     if (method.isAnnotationPresent(GetMapping.class)) {
                         GetMapping getMapping = method.getAnnotation(GetMapping.class);
                         if (null != getMapping) {

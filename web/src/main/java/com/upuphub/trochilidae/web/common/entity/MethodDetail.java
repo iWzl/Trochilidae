@@ -13,7 +13,9 @@ import java.util.regex.Pattern;
  * @date create time 2020-10-18 16:12
  **/
 public class MethodDetail {
-    // target method
+    /**
+     * 触发的方法
+     */
     private Method method;
     // url parameter mapping
     private Map<String, String> urlParameterMappings;
