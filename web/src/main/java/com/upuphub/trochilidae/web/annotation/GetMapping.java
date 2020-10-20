@@ -1,7 +1,5 @@
 package com.upuphub.trochilidae.web.annotation;
 
-import com.upuphub.trochilidae.web.common.lang.HttpMethod;
-
 import java.lang.annotation.*;
 
 
@@ -14,24 +12,17 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@RequestMapping(method = HttpMethod.GET)
 public @interface GetMapping {
 
-    @AliasFor(annotation = RequestMapping.class)
     String name() default "";
 
-    @AliasFor(annotation = RequestMapping.class)
     String[] value() default {};
 
-    @AliasFor(annotation = RequestMapping.class)
     String[] path() default {};
 
-    @AliasFor(annotation = RequestMapping.class)
     String[] headers() default {};
 
-    @AliasFor(annotation = RequestMapping.class)
     String[] consumes() default {};
 
-    @AliasFor(annotation = RequestMapping.class)
     String[] produces() default {};
 }
