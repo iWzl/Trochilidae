@@ -1,5 +1,7 @@
 package com.upuphub.trochilidae.web.server;
 
+import com.upuphub.trochilidae.web.serializer.Serializer;
+import com.upuphub.trochilidae.web.serializer.impl.JacksonSerializer;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
@@ -9,23 +11,24 @@ import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 /**
- * @author shuang.kou
- * @createTime 2020年09月26日 09:44:00
+ * Json的序列化器
+ *
+ * @author Inspiration S.P.A Leo
+ * @date create time 2020-10-21 10:09
  **/
 public class HttpResponse {
     private static final AsciiString CONTENT_TYPE = AsciiString.cached("Content-Type");
     private static final AsciiString CONTENT_LENGTH = AsciiString.cached("Content-Length");
-    //private static final JacksonSerializer JSON_SERIALIZER;
+    private static final Serializer SERIALIZER;
 
     static {
-       // JSON_SERIALIZER = new JacksonSerializer();
+        SERIALIZER = new JacksonSerializer();
     }
 
-    public static FullHttpResponse ok(Object o) {
-        //byte[] content = JSON_SERIALIZER.serialize(o);
-        byte[] content = null;
+    public static FullHttpResponse build(Object resultType,String contentType) {
+        byte[] content = SERIALIZER.serializeToByteArray(resultType);
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(content));
-        response.headers().set(CONTENT_TYPE, "application/json");
+        response.headers().set(CONTENT_TYPE, "".equals(contentType) ? "*/*":contentType);
         response.headers().setInt(CONTENT_LENGTH, response.content().readableBytes());
         return response;
     }

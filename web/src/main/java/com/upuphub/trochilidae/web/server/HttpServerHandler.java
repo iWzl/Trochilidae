@@ -38,12 +38,12 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         FullHttpResponse response;
         try {
             result = requestHandler.handle(fullHttpRequest);
-            response = HttpResponse.ok(result);
+            response = HttpResponse.build(result,"");
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             String requestPath = UrlUtil.getRequestPath(fullHttpRequest.uri());
             //response = HttpResponse.internalServerError(requestPath, e.toString());
-            response = HttpResponse.ok("result");
+            response = HttpResponse.build("result","");
         }
         boolean keepAlive = HttpUtil.isKeepAlive(fullHttpRequest);
         if (!keepAlive) {
