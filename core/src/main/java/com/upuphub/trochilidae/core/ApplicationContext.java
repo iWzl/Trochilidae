@@ -1,6 +1,7 @@
 package com.upuphub.trochilidae.core;
 
 import com.upuphub.trochilidae.core.aop.factory.InterceptorFactory;
+import com.upuphub.trochilidae.core.banner.Banner;
 import com.upuphub.trochilidae.core.exception.SingleBeanCreateException;
 import com.upuphub.trochilidae.core.factory.BeanFactory;
 import com.upuphub.trochilidae.core.factory.ClassFactory;
@@ -22,6 +23,7 @@ public final class ApplicationContext {
     }
 
     public static void run(Class<?> bootstrapClazz){
+        Banner.print();
         // Load classes with custom annotation
         ClassFactory.loadClass(bootstrapClazz);
         // Load beans managed by the ioc container

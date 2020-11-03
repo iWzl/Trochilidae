@@ -93,37 +93,37 @@ public class RouteMethodMapper {
         List<RequestMappingDetail> requestMappingDetailList = new ArrayList<>();
         for (Annotation annotation : method.getAnnotations()) {
             if(isRequestMappingAnnotation(annotation)){
-                RequestMappingDetail requestMappingDetail = new RequestMappingDetail();
+                RequestMappingDetail.Builder requestMappingDetailBuilder =  RequestMappingDetail.newBuilder();
                 if(annotation instanceof GetMapping){
-                    requestMappingDetail.setHttpMethod(HttpMethod.GET);
-                    requestMappingDetail.setConsumes(((GetMapping) annotation).consumes());
-                    requestMappingDetail.setHeaders(((GetMapping) annotation).headers());
-                    requestMappingDetail.setProduces(((GetMapping) annotation).produces());
-                    requestMappingDetail.setName(((GetMapping) annotation).name());
-                    requestMappingDetail.setPath(((GetMapping) annotation).path());
+                    requestMappingDetailBuilder.httpMethod(HttpMethod.GET)
+                            .consumes(((GetMapping) annotation).consumes())
+                            .headers(((GetMapping) annotation).headers())
+                            .produces(((GetMapping) annotation).produces())
+                            .name(((GetMapping) annotation).name())
+                            .path(((GetMapping) annotation).path());
                 }else if(annotation instanceof PutMapping){
-                    requestMappingDetail.setHttpMethod(HttpMethod.PUT);
-                    requestMappingDetail.setConsumes(((PutMapping) annotation).consumes());
-                    requestMappingDetail.setHeaders(((PutMapping) annotation).headers());
-                    requestMappingDetail.setProduces(((PutMapping) annotation).produces());
-                    requestMappingDetail.setName(((PutMapping) annotation).name());
-                    requestMappingDetail.setPath(((PutMapping) annotation).path());
+                    requestMappingDetailBuilder.httpMethod(HttpMethod.GET)
+                            .consumes(((PutMapping) annotation).consumes())
+                            .headers(((PutMapping) annotation).headers())
+                            .produces(((PutMapping) annotation).produces())
+                            .name(((PutMapping) annotation).name())
+                            .path(((PutMapping) annotation).path());
                 }else if(annotation instanceof PostMapping){
-                    requestMappingDetail.setHttpMethod(HttpMethod.POST);
-                    requestMappingDetail.setConsumes(((PostMapping) annotation).consumes());
-                    requestMappingDetail.setHeaders(((PostMapping) annotation).headers());
-                    requestMappingDetail.setProduces(((PostMapping) annotation).produces());
-                    requestMappingDetail.setName(((PostMapping) annotation).name());
-                    requestMappingDetail.setPath(((PostMapping) annotation).path());
+                    requestMappingDetailBuilder.httpMethod(HttpMethod.GET)
+                            .consumes(((PostMapping) annotation).consumes())
+                            .headers(((PostMapping) annotation).headers())
+                            .produces(((PostMapping) annotation).produces())
+                            .name(((PostMapping) annotation).name())
+                            .path(((PostMapping) annotation).path());
                 }else if(annotation instanceof DeleteMapping){
-                    requestMappingDetail.setHttpMethod(HttpMethod.DELETE);
-                    requestMappingDetail.setConsumes(((DeleteMapping) annotation).consumes());
-                    requestMappingDetail.setHeaders(((DeleteMapping) annotation).headers());
-                    requestMappingDetail.setProduces(((DeleteMapping) annotation).produces());
-                    requestMappingDetail.setName(((DeleteMapping) annotation).name());
-                    requestMappingDetail.setPath(((DeleteMapping) annotation).path());
+                    requestMappingDetailBuilder.httpMethod(HttpMethod.GET)
+                            .consumes(((DeleteMapping) annotation).consumes())
+                            .headers(((DeleteMapping) annotation).headers())
+                            .produces(((DeleteMapping) annotation).produces())
+                            .name(((DeleteMapping) annotation).name())
+                            .path(((DeleteMapping) annotation).path());
                 }
-                requestMappingDetailList.add(requestMappingDetail);
+                requestMappingDetailList.add(requestMappingDetailBuilder.build());
             }
         }
         return requestMappingDetailList;

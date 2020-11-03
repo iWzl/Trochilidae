@@ -33,7 +33,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         if (uri.equals(FAVICON_ICO)) {
             return;
         }
-        RequestHandler requestHandler = RequestHandlerFactory.create(fullHttpRequest.method());
+        RequestHandler requestHandler = RequestHandlerFactory.get(fullHttpRequest.method());
         Object result;
         FullHttpResponse response;
         try {
