@@ -1,12 +1,19 @@
 package com.upuphub.trochilidae.web.handler.impl;
 
 import com.upuphub.trochilidae.web.common.entity.RequestMappingDetail;
+import com.upuphub.trochilidae.web.common.lang.HttpMethod;
+import com.upuphub.trochilidae.web.common.util.UrlUtil;
+import com.upuphub.trochilidae.web.exception.RequsetMappingNotFindException;
+import com.upuphub.trochilidae.web.factory.RouteMethodMapper;
 import com.upuphub.trochilidae.web.handler.RequestHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.Charsets;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,22 +30,17 @@ public class GetRequestHandler implements RequestHandler {
         String requestUri = fullHttpRequest.uri();
         fullHttpRequest.headers();
         Map<String, String> queryParameterMappings = getQueryParams(requestUri);
-//        // get http request path，such as "/user"
-//        String requestPath = UrlUtil.getRequestPath(requestUri);
-//        // get target method
-//        RequestMethodDetail methodDetail = RouteMethodMapper.getRequestMethodDetail(requestPath, HttpMethod.GET);
-//        if (methodDetail == null) {
-//            return null;
-//        }
-//        methodDetail.setQueryParameterMappings(queryParameterMappings);
-//        Method targetMethod = methodDetail.getMethod();
-//        if (targetMethod == null) {
-//            return null;
-//        }
-//        //log.info("requestPath -> target method [{}]", targetMethod.getName());
-//        Parameter[] targetMethodParameters = targetMethod.getParameters();
-//        // target method parameters.
-//        // notice! you should convert it to array when pass into the executeMethod method
+        // get http request path
+        String requestPath = UrlUtil.getRequestPath(requestUri);
+        // get target request Mapping detail
+        RequestMappingDetail requestMappingDetail = RouteMethodMapper.getRequestMappingDetail(requestPath,HttpMethod.GET);
+        if(null == requestMappingDetail || null == requestMappingDetail.getTargetMethod()){
+            throw new RequsetMappingNotFindException("RequestPath Handler Not Find : " + requestPath);
+        }
+        Method targetMethod = requestMappingDetail.getTargetMethod();
+        Parameter[] targetMethodParameters = targetMethod.getParameters();
+        // target method parameters.
+        // notice! you should convert it to array when pass into the executeMethod method
 //        List<Object> targetMethodParams = new ArrayList<>();
 //        for (Parameter parameter : targetMethodParameters) {
 //            ParameterResolver parameterResolver = ParameterResolverFactory.get(parameter);

@@ -2,7 +2,6 @@ package com.upuphub.trochilidae.web.factory;
 
 import com.upuphub.trochilidae.core.factory.ClassFactory;
 import com.upuphub.trochilidae.web.annotation.*;
-import com.upuphub.trochilidae.web.common.entity.RequestMethodDetail;
 import com.upuphub.trochilidae.web.common.entity.RequestMappingDetail;
 import com.upuphub.trochilidae.web.common.lang.HttpMethod;
 import com.upuphub.trochilidae.web.common.util.UrlUtil;
@@ -10,6 +9,7 @@ import com.upuphub.trochilidae.web.common.util.UrlUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * 路由与控制器方法的映射
@@ -28,7 +28,8 @@ public class RouteMethodMapper {
      * formatted get request url -> original url
      * eg : "^/url/[\u4e00-\u9fa5_a-zA-Z0-9]+/?$" -> /url/{id}
      */
-    private static final Map<HttpMethod, Map<String, String>> REQUEST_URL_MAPPINGS = new HashMap<>(8);
+    private static final Map<HttpMethod, Map<Pattern, String>> REQUEST_URL_MAPPINGS = new HashMap<>(8);
+
 
     private static void init(){
         REQUEST_METHOD_MAPPINGS.put(HttpMethod.GET,new HashMap<>(128));
@@ -70,11 +71,13 @@ public class RouteMethodMapper {
                             String path = "/";
                             String formatUrl = UrlUtil.formatUrl(path);
                             REQUEST_METHOD_MAPPINGS.get(requestMappingDetail.getHttpMethod()).put(formatUrl,requestMappingDetail);
-                            REQUEST_URL_MAPPINGS.get(requestMappingDetail.getHttpMethod()).put(formatUrl,path);
+                            Pattern pattern = Pattern.compile(formatUrl);
+                            REQUEST_URL_MAPPINGS.get(requestMappingDetail.getHttpMethod()).put(pattern,path);
                         }else{
                             for (String path : requestMappingDetail.getPath()) {
                                 REQUEST_METHOD_MAPPINGS.get(requestMappingDetail.getHttpMethod()).put(path,requestMappingDetail);
-                                REQUEST_URL_MAPPINGS.get(requestMappingDetail.getHttpMethod()).put(UrlUtil.formatUrl(path),path);
+                                Pattern pattern = Pattern.compile(UrlUtil.formatUrl(path));
+                                REQUEST_URL_MAPPINGS.get(requestMappingDetail.getHttpMethod()).put(pattern,path);
                             }
                         }
                     }
@@ -123,15 +126,26 @@ public class RouteMethodMapper {
                             .name(((DeleteMapping) annotation).name())
                             .path(((DeleteMapping) annotation).path());
                 }
+                requestMappingDetailBuilder.targetMethod(method);
                 requestMappingDetailList.add(requestMappingDetailBuilder.build());
             }
         }
         return requestMappingDetailList;
     }
 
-    public static RequestMethodDetail getRequestMethodDetail(String requestPath,RequestMappingDetail requestMappingDetail) {
+    public static RequestMethodDetail getRequestMethodDetail(String requestPath, RequestMappingDetail requestMappingDetail) {
         RequestMethodDetail requestMethodDetail = new RequestMethodDetail();
         requestMethodDetail.build(requestPath,requestMappingDetail);
         return requestMethodDetail;
+    }
+
+    public static RequestMappingDetail getRequestMappingDetail(String requestPath, HttpMethod httpMethod) {
+        String url = "/404";
+        for (Pattern pattern : REQUEST_URL_MAPPINGS.get(httpMethod).keySet()) {
+            if(pattern.matcher(requestPath).find()){
+                url = REQUEST_URL_MAPPINGS.get(httpMethod).get(pattern);
+            }
+        }
+        return REQUEST_METHOD_MAPPINGS.get(httpMethod).get(url);
     }
 }

@@ -2,6 +2,8 @@ package com.upuphub.trochilidae.web.common.entity;
 
 import com.upuphub.trochilidae.web.common.lang.HttpMethod;
 
+import java.lang.reflect.Method;
+
 /**
  * 请求产生的数据映射
  *
@@ -10,17 +12,19 @@ import com.upuphub.trochilidae.web.common.lang.HttpMethod;
  **/
 public class RequestMappingDetail {
 
-    private HttpMethod httpMethod;
+    private final HttpMethod httpMethod;
 
-    private String name;
+    private final String name;
 
     private String[] path;
 
-    private String[] headers;
+    private final String[] headers;
 
-    private String[] consumes;
+    private final String[] consumes;
 
-    private String[] produces;
+    private final String[] produces;
+
+    private final Method targetMethod;
 
 
     public static Builder newBuilder(){
@@ -40,6 +44,8 @@ public class RequestMappingDetail {
         private String[] consumes;
 
         private String[] produces;
+
+        private Method targetMethod;
 
         public Builder httpMethod(HttpMethod httpMethod) {
             this.httpMethod = httpMethod;
@@ -71,66 +77,59 @@ public class RequestMappingDetail {
             return this;
         }
 
+        public Builder targetMethod(Method targetMethod){
+            this.targetMethod = targetMethod;
+            return this;
+        }
+
         public RequestMappingDetail build(){
-            return new RequestMappingDetail(httpMethod,name,path,headers,consumes,produces);
+            if(null != path && path.length == 0){ ;
+                path = new String[1];
+                path[0] = "/";
+            }
+            return new RequestMappingDetail(httpMethod,name,path,headers,consumes,produces,targetMethod);
         }
     }
 
-    private RequestMappingDetail(HttpMethod httpMethod, String name, String[] path, String[] headers, String[] consumes, String[] produces) {
+    private RequestMappingDetail(HttpMethod httpMethod, String name, String[] path, String[] headers, String[] consumes, String[] produces,Method targetMethod) {
         this.httpMethod = httpMethod;
         this.name = name;
         this.path = path;
         this.headers = headers;
         this.consumes = consumes;
         this.produces = produces;
+        this.targetMethod = targetMethod;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String[] getPath() {
         return path;
-    }
-
-    public void setPath(String[] path) {
-        this.path = path;
     }
 
     public String[] getHeaders() {
         return headers;
     }
 
-    public void setHeaders(String[] headers) {
-        this.headers = headers;
-    }
-
     public String[] getConsumes() {
         return consumes;
-    }
-
-    public void setConsumes(String[] consumes) {
-        this.consumes = consumes;
     }
 
     public String[] getProduces() {
         return produces;
     }
 
-    public void setProduces(String[] produces) {
-        this.produces = produces;
-    }
-
-
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
+    public Method getTargetMethod() {
+        return targetMethod;
+    }
+
+    public void setPath(String[] path) {
+        this.path = path;
     }
 }
