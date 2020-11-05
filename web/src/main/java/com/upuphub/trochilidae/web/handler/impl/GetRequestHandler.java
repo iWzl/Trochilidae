@@ -14,6 +14,7 @@ import com.upuphub.trochilidae.web.factory.RouteMethodMapper;
 import com.upuphub.trochilidae.web.handler.RequestHandler;
 import com.upuphub.trochilidae.web.resolver.ParameterResolver;
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.FullHttpResponse;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -56,6 +57,6 @@ public class GetRequestHandler implements RequestHandler {
         String beanName = BeanHelper.getBeanName(requestMappingDetail.getTargetMethod().getDeclaringClass());
         Object targetObject = BeanFactory.BEANS.get(beanName);
         ReflectionUtil.executeTargetMethodNoResult(targetObject, targetMethod, targetMethodParams.toArray());
-        return null;
+        return  FullHttpResponse.EMPTY_LAST_CONTENT;
     }
 }
