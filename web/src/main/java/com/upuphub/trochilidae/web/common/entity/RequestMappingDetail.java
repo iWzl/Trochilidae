@@ -1,5 +1,6 @@
 package com.upuphub.trochilidae.web.common.entity;
 
+import com.upuphub.trochilidae.web.common.lang.HttpMediaType;
 import com.upuphub.trochilidae.web.common.lang.HttpMethod;
 
 import java.lang.reflect.Method;
@@ -116,6 +117,23 @@ public class RequestMappingDetail {
     public String[] getConsumes() {
         return consumes;
     }
+
+    public boolean checkRequestContentType(String httpContentType){
+        if(null != httpContentType && null != this.getConsumes() && this.getConsumes().length != 0){
+            for (String consume : this.getConsumes()) {
+                if(HttpMediaType.ALL_VALUE.equals(consume)){
+                    return false;
+                }else if(consume.equalsIgnoreCase(httpContentType)){
+                    return false;
+                }
+            }
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
 
     public String[] getProduces() {
         return produces;

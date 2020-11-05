@@ -133,11 +133,6 @@ public class RouteMethodMapper {
         return requestMappingDetailList;
     }
 
-    public static RequestMethodDetail getRequestMethodDetail(String requestPath, RequestMappingDetail requestMappingDetail) {
-        RequestMethodDetail requestMethodDetail = new RequestMethodDetail();
-        requestMethodDetail.build(requestPath,requestMappingDetail);
-        return requestMethodDetail;
-    }
 
     public static RequestMappingDetail getRequestMappingDetail(String requestPath, HttpMethod httpMethod) {
         String url = "/404";

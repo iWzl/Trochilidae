@@ -8,8 +8,8 @@ import com.upuphub.trochilidae.core.exception.TrochilidaeRuntimeException;
  * @author Inspiration S.P.A Leo
  * @date create time 2020-11-04 10:43
  **/
-public class RequsetMappingNotFindException extends TrochilidaeRuntimeException {
-    public RequsetMappingNotFindException(String message) {
+public class RequestMappingNotFindException extends TrochilidaeRuntimeException {
+    public RequestMappingNotFindException(String message) {
         super(message);
     }
 }

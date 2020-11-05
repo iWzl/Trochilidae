@@ -16,4 +16,5 @@ import java.lang.annotation.*;
 @Component
 public @interface RestController {
     String value() default "";
+    String name() default "";
 }
