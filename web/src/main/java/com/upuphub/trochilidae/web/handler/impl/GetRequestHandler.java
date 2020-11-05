@@ -3,6 +3,7 @@ package com.upuphub.trochilidae.web.handler.impl;
 import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
 import com.upuphub.trochilidae.core.factory.BeanFactory;
 import com.upuphub.trochilidae.web.common.entity.RequestMappingDetail;
+import com.upuphub.trochilidae.web.common.entity.RequestParamManager;
 import com.upuphub.trochilidae.web.common.lang.HttpMediaType;
 import com.upuphub.trochilidae.web.common.lang.HttpMethod;
 import com.upuphub.trochilidae.web.common.util.BeanHelper;
@@ -46,11 +47,12 @@ public class GetRequestHandler implements RequestHandler {
         Parameter[] targetMethodParameters = targetMethod.getParameters();
         // target method parameters.
         // notice! you should convert it to array when pass into the executeMethod method
+        RequestParamManager requestParamManager = RequestParamManager.build(fullHttpRequest,requestMappingDetail);
         List<Object> targetMethodParams = new ArrayList<>();
         for (Parameter parameter : targetMethodParameters) {
             ParameterResolver parameterResolver = ParameterResolverFactory.get(parameter);
             if (parameterResolver != null) {
-                Object param = parameterResolver.resolve(fullHttpRequest, parameter);
+                Object param = parameterResolver.resolve(parameter,requestParamManager);
                 targetMethodParams.add(param);
             }
         }

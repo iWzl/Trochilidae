@@ -1,4 +1,4 @@
-package com.upuphub.trochilidae.web.common.entity;
+package com.upuphub.trochilidae.web.common.http;
 
 /**
  * 服务器异常回包

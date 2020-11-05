@@ -1,4 +1,4 @@
-package com.upuphub.trochilidae.web.common.entity;
+package com.upuphub.trochilidae.web.common.http;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

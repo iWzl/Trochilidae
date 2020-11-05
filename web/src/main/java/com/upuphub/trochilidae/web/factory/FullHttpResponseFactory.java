@@ -1,8 +1,8 @@
 package com.upuphub.trochilidae.web.factory;
 
-import com.upuphub.trochilidae.web.common.entity.InternalServerErrorRsp;
-import com.upuphub.trochilidae.web.common.entity.ResultCodeEnum;
-import com.upuphub.trochilidae.web.common.entity.ServiceResponseMessage;
+import com.upuphub.trochilidae.web.common.http.InternalServerErrorRsp;
+import com.upuphub.trochilidae.web.common.http.ResultCodeEnum;
+import com.upuphub.trochilidae.web.common.http.ServiceResponseMessage;
 import com.upuphub.trochilidae.web.common.lang.HttpMediaType;
 import com.upuphub.trochilidae.web.serializer.Serializer;
 import io.netty.buffer.Unpooled;

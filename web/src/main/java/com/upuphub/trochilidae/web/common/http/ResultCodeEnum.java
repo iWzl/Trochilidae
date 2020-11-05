@@ -1,4 +1,4 @@
-package com.upuphub.trochilidae.web.common.entity;
+package com.upuphub.trochilidae.web.common.http;
 
 /**
  * 消息返回码的统一定义
