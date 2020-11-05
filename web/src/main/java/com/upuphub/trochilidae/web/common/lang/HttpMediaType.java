@@ -1,5 +1,7 @@
 package com.upuphub.trochilidae.web.common.lang;
 
+import io.netty.util.AsciiString;
+
 /**
  * HttpMediaType
  *
@@ -9,6 +11,13 @@ package com.upuphub.trochilidae.web.common.lang;
 public class HttpMediaType {
 
     public static final String CONTENT_TYPE_VALUE = "Content-Type";
+
+    public static final String FAVICON_ICO = "/favicon.ico";
+    public static final AsciiString CONNECTION = AsciiString.cached("Connection");
+    public static final AsciiString KEEP_ALIVE = AsciiString.cached("keep-alive");
+    public static final AsciiString CONTENT_TYPE = AsciiString.cached("Content-Type");
+    public static final AsciiString CONTENT_LENGTH = AsciiString.cached("Content-Length");
+
 
 
     public static final String ALL_VALUE = "*/*";
