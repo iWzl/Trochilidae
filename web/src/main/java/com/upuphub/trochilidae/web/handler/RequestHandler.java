@@ -26,6 +26,7 @@ import java.util.List;
  * @author Inspiration S.P.A Leo
  * @date create time 2020-10-19 16:38
  **/
+@FunctionalInterface
 public interface RequestHandler {
     /**
      * Http请求的处理
