@@ -123,7 +123,7 @@ public class RequestMappingDetail {
             for (String consume : this.getConsumes()) {
                 if(HttpMediaType.ALL_VALUE.equals(consume)){
                     return false;
-                }else if(consume.equalsIgnoreCase(httpContentType)){
+                }else if(getContentType(consume).equalsIgnoreCase(getContentType(httpContentType))){
                     return false;
                 }
             }
@@ -131,6 +131,11 @@ public class RequestMappingDetail {
         }else {
             return false;
         }
+    }
+
+    private String getContentType(String typeStr){
+        String[] list = typeStr.split(";");
+        return list[0];
     }
 
 

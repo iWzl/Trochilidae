@@ -34,6 +34,10 @@ public class FullHttpResponseFactory {
 
     public static FullHttpResponse buildDefaultFullHttpResponseNoResult(String[] produces) {
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, HttpResponseStatus.OK);
+        if(null == produces || produces.length == 0){
+            produces = new String[1];
+            produces[0] = HttpMediaType.ALL_VALUE;
+        }
         response.headers().set(HttpMediaType.CONTENT_TYPE, produces);
         response.headers().setInt(HttpMediaType.CONTENT_LENGTH, response.content().readableBytes());
         return response;

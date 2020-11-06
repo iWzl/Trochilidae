@@ -33,7 +33,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         RequestHandler requestHandler = RequestHandlerFactory.get(fullHttpRequest.method());
         FullHttpResponse response;
         try {
-            response = (FullHttpResponse)requestHandler.handle(fullHttpRequest);
+            response = requestHandler.handle(fullHttpRequest);
         } catch (RequestMappingNotFindException e) {
             response = FullHttpResponseFactory.internalServerUrlNotFindError(e.getMessage());
             logger.error("Url Not Find {}",e.getMessage());

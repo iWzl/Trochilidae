@@ -1,6 +1,7 @@
 package com.upuphub.trochilidae.web.common.entity;
 
 import com.upuphub.trochilidae.web.common.util.UrlUtil;
+import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
 import org.apache.commons.codec.CharEncoding;
@@ -19,18 +20,19 @@ import java.util.Map;
 public class RequestParamManager {
     private Map<String,String> pathVariableParameterMap;
     private Map<String, String> paramParameterMap;
-    private String jsonParameter;
+    private ByteBuf bodyByteBuf;
 
     public static RequestParamManager build(FullHttpRequest fullHttpRequest, RequestMappingDetail requestMappingDetail) {
         String requestUri = fullHttpRequest.uri();
         String requestPath = UrlUtil.getRequestPath(requestUri);
         RequestParamManager requestParamManager = new RequestParamManager();
         requestParamManager.setParamParameterMap(requestParamManager.getQueryParams(requestUri));
-        Map<String, String> requestUrlParamMap = new HashMap<>();
+        Map<String, String> requestUrlParamMap = new HashMap<>(16);
         for (String path : requestMappingDetail.getPath()) {
             requestUrlParamMap.putAll(requestParamManager.getUrlParameterMappings(requestPath,path));
         }
         requestParamManager.setPathVariableParameterMap(requestUrlParamMap);
+        requestParamManager.setBodyByteBuf(fullHttpRequest.content());
         return requestParamManager;
     }
 
@@ -85,11 +87,11 @@ public class RequestParamManager {
         this.paramParameterMap = paramParameterMap;
     }
 
-    public String getJsonParameter() {
-        return jsonParameter;
+    public ByteBuf getBodyByteBuf() {
+        return bodyByteBuf;
     }
 
-    public void setJsonParameter(String jsonParameter) {
-        this.jsonParameter = jsonParameter;
+    public void setBodyByteBuf(ByteBuf bodyByteBuf) {
+        this.bodyByteBuf = bodyByteBuf;
     }
 }
