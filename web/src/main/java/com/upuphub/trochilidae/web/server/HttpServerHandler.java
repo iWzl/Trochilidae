@@ -26,6 +26,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, FullHttpRequest fullHttpRequest) {
+        long startTime = System.currentTimeMillis();
         String uri = fullHttpRequest.uri();
         if (uri.equals(HttpMediaType.FAVICON_ICO)) {
             return;
@@ -36,10 +37,10 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             response = requestHandler.handle(fullHttpRequest);
         } catch (RequestMappingNotFindException e) {
             response = FullHttpResponseFactory.internalServerUrlNotFindError(e.getMessage());
-            logger.error("Url Not Find {}",e.getMessage());
+            logger.error("handler request uri not find {}",e.getMessage());
         }catch (Exception e){
             response = FullHttpResponseFactory.internalServerError(e);
-            logger.error("channelRead0 {}",e.getMessage(),e);
+            logger.error("handler request error {}",e.getMessage(),e);
         }
         boolean keepAlive = HttpUtil.isKeepAlive(fullHttpRequest);
         if (!keepAlive) {
@@ -48,11 +49,14 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             response.headers().set(HttpMediaType.CONNECTION,HttpMediaType.KEEP_ALIVE);
             channelHandlerContext.write(response);
         }
+        if(logger.isDebugEnabled()){
+            logger.debug("handler request finished uri [{}] use [{}]ms",UrlUtil.getRequestPath(uri),System.currentTimeMillis() - startTime);
+        }
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        logger.error("ExceptionCaught {}",cause.getMessage(),cause);
+        logger.error("handler request exception caught {}",cause.getMessage(),cause);
         ctx.close();
     }
 

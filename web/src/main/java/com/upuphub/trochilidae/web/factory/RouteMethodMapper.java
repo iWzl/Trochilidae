@@ -105,21 +105,21 @@ public class RouteMethodMapper {
                             .name(((GetMapping) annotation).name())
                             .path(((GetMapping) annotation).path());
                 }else if(annotation instanceof PutMapping){
-                    requestMappingDetailBuilder.httpMethod(HttpMethod.GET)
+                    requestMappingDetailBuilder.httpMethod(HttpMethod.PUT)
                             .consumes(((PutMapping) annotation).consumes())
                             .headers(((PutMapping) annotation).headers())
                             .produces(((PutMapping) annotation).produces())
                             .name(((PutMapping) annotation).name())
                             .path(((PutMapping) annotation).path());
                 }else if(annotation instanceof PostMapping){
-                    requestMappingDetailBuilder.httpMethod(HttpMethod.GET)
+                    requestMappingDetailBuilder.httpMethod(HttpMethod.POST)
                             .consumes(((PostMapping) annotation).consumes())
                             .headers(((PostMapping) annotation).headers())
                             .produces(((PostMapping) annotation).produces())
                             .name(((PostMapping) annotation).name())
                             .path(((PostMapping) annotation).path());
                 }else if(annotation instanceof DeleteMapping){
-                    requestMappingDetailBuilder.httpMethod(HttpMethod.GET)
+                    requestMappingDetailBuilder.httpMethod(HttpMethod.DELETE)
                             .consumes(((DeleteMapping) annotation).consumes())
                             .headers(((DeleteMapping) annotation).headers())
                             .produces(((DeleteMapping) annotation).produces())

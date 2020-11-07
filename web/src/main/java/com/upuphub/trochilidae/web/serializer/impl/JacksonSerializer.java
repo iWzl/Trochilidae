@@ -2,6 +2,7 @@ package com.upuphub.trochilidae.web.serializer.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.upuphub.trochilidae.web.exception.JsonFormartProcessException;
 import com.upuphub.trochilidae.web.serializer.Serializer;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class JacksonSerializer implements Serializer {
         try {
             object = objectMapper.readValue(bytes, clazz);
         } catch (IOException e) {
-            logger.error("JacksonSerializer.serializeToObject Error {}",e.getMessage(),e);
+            throw new JsonFormartProcessException(e);
         }
         return object;
     }

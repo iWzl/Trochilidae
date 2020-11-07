@@ -26,7 +26,11 @@ public class FullHttpResponseFactory {
         Serializer serializer = SerializerFactory.getSerializerWithContentType(produces);
         byte[] content = serializer.serializeToByteArray(responseObject);
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, HttpResponseStatus.OK, Unpooled.wrappedBuffer(content));
-        response.headers().set(HttpMediaType.CONTENT_TYPE, produces);
+        StringBuilder productBuilder = new StringBuilder();
+        for (String produce : produces) {
+            productBuilder.append(String.format("%s;",produce));
+        }
+        response.headers().set(HttpMediaType.CONTENT_TYPE, productBuilder.toString());
         response.headers().setInt(HttpMediaType.CONTENT_LENGTH, response.content().readableBytes());
         return response;
     }
