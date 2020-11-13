@@ -11,6 +11,8 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>trochilidae-core</artifactId>
     <name>Trochilidae :: Core</name>
+
+
     <build>
         <plugins>
             <plugin>
@@ -30,6 +32,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -44,6 +47,11 @@
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
         </dependency>
     </dependencies>
 </project>

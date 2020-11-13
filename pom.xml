@@ -22,6 +22,7 @@
         <reflections-version>0.9.12</reflections-version>
         <cglib-version>3.3.0</cglib-version>
         <commons-codec-version>1.15</commons-codec-version>
+        <snakeyaml-version>1.27</snakeyaml-version>
         <trochilidae-version>1.0-SNAPSHOT</trochilidae-version>
     </properties>
 
@@ -47,6 +48,7 @@
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>${netty-version}</version>
+                <optional>true</optional>
             </dependency>
 
             <!-- Json解析库：jackson -->
@@ -54,6 +56,8 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson-version}</version>
+                <optional>true</optional>
+
             </dependency>
 
             <!--   编解码    -->
@@ -61,6 +65,7 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${commons-codec-version}</version>
+                <optional>true</optional>
             </dependency>
 
             <!-- LOG日志:SLF4J -->
@@ -68,12 +73,15 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j-version}</version>
+                <optional>true</optional>
             </dependency>
+
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-simple</artifactId>
                 <version>${slf4j-version}</version>
                 <scope>test</scope>
+                <optional>true</optional>
             </dependency>
 
             <!-- 注解扫描:Reflections -->
@@ -81,6 +89,7 @@
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections</artifactId>
                 <version>${reflections-version}</version>
+                <optional>true</optional>
             </dependency>
 
             <!-- 动态代理:Cglib -->
@@ -88,17 +97,38 @@
                 <groupId>cglib</groupId>
                 <artifactId>cglib</artifactId>
                 <version>${cglib-version}</version>
+                <optional>true</optional>
             </dependency>
 
+            <!-- yaml文件的读取:snake yaml -->
             <dependency>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml-version}</version>
                 <optional>true</optional>
             </dependency>
 
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <configuration>
+                        <descriptorRefs>
+                            <descriptorRef>
+                                jar-with-dependencies
+                            </descriptorRef>
+                        </descriptorRefs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 
 </project>
