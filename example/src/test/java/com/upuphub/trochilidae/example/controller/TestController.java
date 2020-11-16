@@ -1,8 +1,11 @@
 package com.upuphub.trochilidae.example.controller;
 
+import com.upuphub.trochilidae.example.TrochilidaeExampleApplication;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
@@ -13,8 +16,6 @@ import static org.hamcrest.Matchers.equalTo;
  * @author Inspiration S.P.A Leo
  * @date create time 2020-11-13 16:16
  **/
-
-
 public class TestController {
 
     @BeforeAll

@@ -27,8 +27,12 @@ public final class BeanFactory {
             ClassFactory.CLASSES.get(loadBeanAnnotation).forEach(targetBeanClass -> {
                 String beanName = IocUtil.getBeanName(targetBeanClass);
                 Object beanInstance = ReflectionUtil.newInstance(targetBeanClass);
-                BEANS.put(beanName, beanInstance);
+                insertBean(beanName, beanInstance);
             });
         }
+    }
+
+    public static void insertBean(String beanName,Object beanInstance){
+        BEANS.put(beanName, beanInstance);
     }
 }

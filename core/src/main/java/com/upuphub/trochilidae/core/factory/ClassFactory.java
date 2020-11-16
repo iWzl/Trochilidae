@@ -1,6 +1,7 @@
 package com.upuphub.trochilidae.core.factory;
 
 import com.upuphub.trochilidae.core.annotation.aop.Aspect;
+import com.upuphub.trochilidae.core.annotation.bean.ComponentScan;
 import com.upuphub.trochilidae.core.annotation.ioc.Component;
 import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
 
@@ -29,11 +30,13 @@ public class ClassFactory {
     }
 
     public static void loadClass(Class<?> bootstrapClass) {
-        String packageName = bootstrapClass.getPackage().getName();
-        loadClass(packageName);
+        ComponentScan componentScan = bootstrapClass.getAnnotation(ComponentScan.class);
+        String[] packageNames =  !Objects.isNull(componentScan) ? componentScan.value()
+                : new String[]{bootstrapClass.getPackage().getName()};
+        loadClass(packageNames);
     }
 
-    public static void loadClass(String packageName) {
-        CLASSES.putAll(ReflectionUtil.scanAnnotatedClasses(packageName,SCAN_ANNOTATION));
+    public static void loadClass(String[] packageNames) {
+        CLASSES.putAll(ReflectionUtil.scanAnnotatedClasses(packageNames,SCAN_ANNOTATION));
     }
 }

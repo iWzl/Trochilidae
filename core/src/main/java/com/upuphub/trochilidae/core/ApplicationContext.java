@@ -1,11 +1,20 @@
 package com.upuphub.trochilidae.core;
 
 import com.upuphub.trochilidae.core.aop.factory.InterceptorFactory;
+import com.upuphub.trochilidae.core.aop.intercept.Interceptor;
 import com.upuphub.trochilidae.core.banner.Banner;
+import com.upuphub.trochilidae.core.common.util.IocUtil;
+import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
+import com.upuphub.trochilidae.core.config.Configuration;
+import com.upuphub.trochilidae.core.config.ConfigurationManager;
+import com.upuphub.trochilidae.core.config.ResourceConfigurationPostProcess;
 import com.upuphub.trochilidae.core.exception.SingleBeanCreateException;
 import com.upuphub.trochilidae.core.factory.BeanFactory;
 import com.upuphub.trochilidae.core.factory.ClassFactory;
+import com.upuphub.trochilidae.core.factory.ConfigurationFactory;
 import com.upuphub.trochilidae.core.ioc.DependencyInjection;
+
+import java.util.Set;
 
 /**
  * 应用上下文
@@ -22,16 +31,29 @@ public final class ApplicationContext {
         }
     }
 
-    public static void run(Class<?> bootstrapClazz){
+    public void run(Class<?> bootstrapClazz){
         Banner.print();
         // Load classes with custom annotation
         ClassFactory.loadClass(bootstrapClazz);
+        // Load resource from yaml or properties
+        loadConfigurationManger(bootstrapClazz);
         // Load beans managed by the ioc container
         BeanFactory.loadBeans();
         // Load interceptors
         InterceptorFactory.loadInterceptors(bootstrapClazz);
         // Traverse all the beans in the ioc container and inject instances for all @Autowired annotated attributes.
         DependencyInjection.dependencyInjection(bootstrapClazz);
+    }
+
+    private static void loadConfigurationManger(Class<?> bootstrapClazz){
+        ConfigurationManager configurationManager = ConfigurationFactory.getDefaultConfigurationManager();
+        configurationManager.loadConfigurationResources(bootstrapClazz);
+        Set<Class<? extends ResourceConfigurationPostProcess>>  resourceConfigurationPostProcessList
+                = ReflectionUtil.getSubClass(bootstrapClazz.getPackage().getName(), ResourceConfigurationPostProcess.class);
+        for (Class<? extends ResourceConfigurationPostProcess>  resourceConfigurationPostProcessClazz: resourceConfigurationPostProcessList) {
+
+        }
+        BeanFactory.insertBean(IocUtil.getBeanName(ConfigurationManager.class),configurationManager);
     }
 
 

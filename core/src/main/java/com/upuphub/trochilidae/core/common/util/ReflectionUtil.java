@@ -28,12 +28,12 @@ public class ReflectionUtil {
     /**
      * scan the classes marked by the specified annotation in the specified package
      *
-     * @param packageName specified package name
+     * @param packageNames specified package name
      * @param annotation  specified annotation
      * @return the classes marked by the specified annotation in the specified package
      */
-    public static Set<Class<?>> scanAnnotatedClass(String packageName, Class<? extends Annotation> annotation) {
-        Reflections reflections = new Reflections(packageName, new TypeAnnotationsScanner());
+    public static Set<Class<?>> scanAnnotatedClass(String[] packageNames, Class<? extends Annotation> annotation) {
+        Reflections reflections = new Reflections(packageNames, new TypeAnnotationsScanner());
         Set<Class<?>> annotatedClass = reflections.getTypesAnnotatedWith(annotation, true);
         logger.debug("The number of class Annotated with  @{} :[{}]",annotation.getSimpleName(),annotatedClass.size());
         return annotatedClass;
@@ -43,15 +43,15 @@ public class ReflectionUtil {
     /**
      * scan the classes marked by the specified annotation in the specified package
      *
-     * @param packageName specified package name
+     * @param packageNames specified package name
      * @param annotationList  specified annotation
      * @return the classes marked by the specified annotation in the specified package
      */
-    public static Map<Class<? extends Annotation>,Set<Class<?>>> scanAnnotatedClasses(String packageName, Set<Class<? extends Annotation>> annotationList) {
-        if(null == packageName || null == annotationList || "".equals(packageName) || 0 == annotationList.size()){
+    public static Map<Class<? extends Annotation>,Set<Class<?>>> scanAnnotatedClasses(String[] packageNames, Set<Class<? extends Annotation>> annotationList) {
+        if(null == packageNames || null == annotationList || 0 == packageNames.length || 0 == annotationList.size()){
             throw new CheckClassScanParamsException("Not find scan the classes Params");
         }
-        Reflections reflections = new Reflections(packageName, new TypeAnnotationsScanner());
+        Reflections reflections = new Reflections(packageNames, new TypeAnnotationsScanner());
         Map<Class<? extends Annotation>,Set<Class<?>>> annotatedClassesMap = new ConcurrentHashMap<>(annotationList.size());
         for (Class<? extends Annotation> annotation : annotationList) {
             Set<Class<?>> annotatedClass = reflections.getTypesAnnotatedWith(annotation, true);
