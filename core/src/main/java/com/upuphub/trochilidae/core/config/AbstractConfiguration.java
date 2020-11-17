@@ -37,6 +37,12 @@ public abstract class AbstractConfiguration implements Configuration{
     }
 
     @Override
+    public Double getDouble(String key) {
+        String result = CONFIGURATION_CACHE.get(key);
+        return Double.parseDouble(result);
+    }
+
+    @Override
     public Map<String, String> getAll() {
         return CONFIGURATION_CACHE;
     }

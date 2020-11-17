@@ -19,6 +19,8 @@ public interface Configuration {
 
     Long getLong(String key);
 
+    Double getDouble(String key);
+
     Map<String, String> getAll();
 
     default void put(String id, String content) {

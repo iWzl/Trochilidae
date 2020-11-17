@@ -62,6 +62,11 @@ public class ConfigurationManager implements Configuration,ResourceConfiguration
     }
 
     @Override
+    public Double getDouble(String key) {
+        return configuration.getDouble(key);
+    }
+
+    @Override
     public Map<String, String> getAll() {
         return configuration.getAll();
     }
