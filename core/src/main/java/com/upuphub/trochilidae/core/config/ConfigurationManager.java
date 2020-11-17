@@ -92,6 +92,12 @@ public class ConfigurationManager implements Configuration,ResourceConfiguration
 
     @Override
     public Map<String, String> handler(Map<String, String> resourceMap) {
+        resourceMap.forEach((key,value)->logger.info("{} : {}",key,value));
         return resourceMap;
+    }
+
+    @Override
+    public int getOrder() {
+        return Integer.MAX_VALUE;
     }
 }
