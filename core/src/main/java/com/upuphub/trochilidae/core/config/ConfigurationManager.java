@@ -4,6 +4,7 @@ package com.upuphub.trochilidae.core.config;
 import com.upuphub.trochilidae.core.config.resource.ResourceLoader;
 import com.upuphub.trochilidae.core.config.resource.property.PropertiesResourceLoader;
 import com.upuphub.trochilidae.core.config.resource.yaml.YamlResourceLoader;
+import com.upuphub.trochilidae.core.factory.ConfigurationFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +59,7 @@ public class ConfigurationManager implements Configuration,ResourceConfiguration
         return configuration.getLong(key);
     }
 
+
     public void loadConfigurationResources(Class<?> bootstrapClass) {
         ClassLoader classLoader = bootstrapClass.getClassLoader();
         List<Path> filePaths = new ArrayList<>();
@@ -74,10 +76,12 @@ public class ConfigurationManager implements Configuration,ResourceConfiguration
                 String fileName = resourcePath.getFileName().toString();
                 if (fileName.endsWith(PROPERTIES_FILE_EXTENSION)) {
                     ResourceLoader resourceLoader = new PropertiesResourceLoader();
-                    configuration.putAll(resourceLoader.load(resourcePath));
+                    Map<String, String> resourceConfigMap = resourceLoader.load(resourcePath);
+                    configuration.putAll(ConfigurationFactory.runResourceConfigurationPostProcess(resourceConfigMap));
                 } else if (fileName.endsWith(YML_FILE_EXTENSION) || fileName.endsWith(YAML_FILE_EXTENSION)) {
                     ResourceLoader resourceLoader = new YamlResourceLoader();
-                    configuration.putAll(resourceLoader.load(resourcePath));
+                    Map<String, String> resourceConfigMap = resourceLoader.load(resourcePath);
+                    configuration.putAll(ConfigurationFactory.runResourceConfigurationPostProcess(resourceConfigMap));
                 }
             }
         } catch (IOException ex) {

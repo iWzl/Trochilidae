@@ -11,4 +11,8 @@ import java.util.Map;
 @FunctionalInterface
 public interface ResourceConfigurationPostProcess {
     Map<String,String> handler(Map<String, String> resourceMap);
+
+    default int getOrder(){
+        return 1;
+    }
 }

@@ -76,14 +76,15 @@ public class ReflectionUtil {
 
     }
 
+
     /**
      * create object instance through class
      *
      * @param cls target class
      * @return object created by the target class
      */
-    public static Object newInstance(Class<?> cls) {
-        Object instance = null;
+    public static <T> T newInstance(Class<T> cls) {
+        T instance = null;
         try {
             instance = cls.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {

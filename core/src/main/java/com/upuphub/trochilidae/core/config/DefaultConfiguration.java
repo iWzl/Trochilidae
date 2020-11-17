@@ -8,4 +8,5 @@ package com.upuphub.trochilidae.core.config;
  **/
 public class DefaultConfiguration extends AbstractConfiguration{
 
+
 }

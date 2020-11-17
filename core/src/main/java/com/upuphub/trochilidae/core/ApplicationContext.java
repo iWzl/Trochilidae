@@ -36,7 +36,7 @@ public final class ApplicationContext {
         // Load classes with custom annotation
         ClassFactory.loadClass(bootstrapClazz);
         // Load resource from yaml or properties
-        loadConfigurationManger(bootstrapClazz);
+        ConfigurationFactory.loadConfigurationManger(bootstrapClazz);
         // Load beans managed by the ioc container
         BeanFactory.loadBeans();
         // Load interceptors
@@ -45,16 +45,7 @@ public final class ApplicationContext {
         DependencyInjection.dependencyInjection(bootstrapClazz);
     }
 
-    private static void loadConfigurationManger(Class<?> bootstrapClazz){
-        ConfigurationManager configurationManager = ConfigurationFactory.getDefaultConfigurationManager();
-        configurationManager.loadConfigurationResources(bootstrapClazz);
-        Set<Class<? extends ResourceConfigurationPostProcess>>  resourceConfigurationPostProcessList
-                = ReflectionUtil.getSubClass(bootstrapClazz.getPackage().getName(), ResourceConfigurationPostProcess.class);
-        for (Class<? extends ResourceConfigurationPostProcess>  resourceConfigurationPostProcessClazz: resourceConfigurationPostProcessList) {
 
-        }
-        BeanFactory.insertBean(IocUtil.getBeanName(ConfigurationManager.class),configurationManager);
-    }
 
 
     public static ApplicationContext getApplicationContext() {

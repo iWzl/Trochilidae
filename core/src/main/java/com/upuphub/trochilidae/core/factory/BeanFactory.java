@@ -35,4 +35,8 @@ public final class BeanFactory {
     public static void insertBean(String beanName,Object beanInstance){
         BEANS.put(beanName, beanInstance);
     }
+
+    public static Object getInstanceByClazz(Class<?> clazz){
+        return BEANS.get(IocUtil.getBeanName(clazz));
+    }
 }
