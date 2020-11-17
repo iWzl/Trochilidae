@@ -13,8 +13,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,6 +30,10 @@ public class ConfigurationManager implements Configuration,ResourceConfiguration
     private static final String YAML_FILE_EXTENSION = ".yaml";
 
     private static final String YML_FILE_EXTENSION = ".yml";
+
+    private static final String TROCHILIDAE_PROFILES_ACTIVE_CONF= "trochilidae.profiles.active";
+
+    private static final String TROCHILIDAE_ACTIVE_PREFIX= "application";
 
     private final Configuration configuration;
 
@@ -59,39 +61,82 @@ public class ConfigurationManager implements Configuration,ResourceConfiguration
         return configuration.getLong(key);
     }
 
+    @Override
+    public Map<String, String> getAll() {
+        return configuration.getAll();
+    }
+
 
     public void loadConfigurationResources(Class<?> bootstrapClass) {
         ClassLoader classLoader = bootstrapClass.getClassLoader();
-        List<Path> filePaths = new ArrayList<>();
         for (String configName : Configuration.DEFAULT_CONFIG_NAMES) {
             URL url = classLoader.getResource(configName);
+            Path resourcePath = null;
             if (!Objects.isNull(url)) {
+                try{
+                    resourcePath = Paths.get(url.toURI());
+                } catch (URISyntaxException ignored) {continue;}
+                String fileName = resourcePath.getFileName().toString();
+                String fileNameEndWith = "";
+                String profileActiveConfigKey = "";
                 try {
-                    filePaths.add(Paths.get(url.toURI()));
-                } catch (URISyntaxException ignored) {}
+                    if (fileName.endsWith(PROPERTIES_FILE_EXTENSION)) {
+                        fileNameEndWith = PROPERTIES_FILE_EXTENSION;
+                        ResourceLoader resourceLoader = new PropertiesResourceLoader();
+                        Map<String, String> resourceConfigMap = resourceLoader.load(resourcePath);
+                        profileActiveConfigKey = resourceConfigMap.getOrDefault(TROCHILIDAE_PROFILES_ACTIVE_CONF,"");
+                        configuration.putAll(resourceConfigMap);
+                    } else if (fileName.endsWith(YML_FILE_EXTENSION) || fileName.endsWith(YAML_FILE_EXTENSION)) {
+                        fileNameEndWith = fileName.endsWith(YML_FILE_EXTENSION) ? YML_FILE_EXTENSION : YAML_FILE_EXTENSION;
+                        ResourceLoader resourceLoader = new YamlResourceLoader();
+                        Map<String, String> resourceConfigMap = resourceLoader.load(resourcePath);
+                        profileActiveConfigKey = resourceConfigMap.getOrDefault(TROCHILIDAE_PROFILES_ACTIVE_CONF,"");
+                        configuration.putAll(resourceConfigMap);
+                    }
+                    if(!"".equals(fileNameEndWith) && !"".equals(profileActiveConfigKey)){
+                        loadChildConfigurationResources(classLoader,fileNameEndWith,profileActiveConfigKey);
+                    }
+                    configuration.putAll(ConfigurationFactory.runResourceConfigurationPostProcess(configuration.getAll()));
+                }catch (IOException ex) {
+                    logger.error("Failed to load configuration file, no correct configuration items were matched",ex);
+                    System.exit(-1);
+                }
+
             }
         }
-        try {
-            for (Path resourcePath : filePaths) {
+
+    }
+
+    private void loadChildConfigurationResources(ClassLoader classLoader,String fileNameEndWith,String profileActiveConfigKey){
+        String configFileName = String.format("%s-%s%s",TROCHILIDAE_ACTIVE_PREFIX,profileActiveConfigKey,fileNameEndWith);
+        URL url = classLoader.getResource(configFileName);
+        if(!Objects.isNull(url)){
+            try {
+                Path resourcePath = Paths.get(url.toURI());
                 String fileName = resourcePath.getFileName().toString();
                 if (fileName.endsWith(PROPERTIES_FILE_EXTENSION)) {
                     ResourceLoader resourceLoader = new PropertiesResourceLoader();
                     Map<String, String> resourceConfigMap = resourceLoader.load(resourcePath);
-                    configuration.putAll(ConfigurationFactory.runResourceConfigurationPostProcess(resourceConfigMap));
+                    configuration.putAll(resourceConfigMap);
                 } else if (fileName.endsWith(YML_FILE_EXTENSION) || fileName.endsWith(YAML_FILE_EXTENSION)) {
                     ResourceLoader resourceLoader = new YamlResourceLoader();
                     Map<String, String> resourceConfigMap = resourceLoader.load(resourcePath);
-                    configuration.putAll(ConfigurationFactory.runResourceConfigurationPostProcess(resourceConfigMap));
+                    configuration.putAll(resourceConfigMap);
                 }
+            }catch (URISyntaxException ignored){}
+            catch (IOException ex){
+                logger.error("Failed to load Child configuration file, no correct configuration items were matched",ex);
+                System.exit(-1);
             }
-        } catch (IOException ex) {
-            logger.error("Failed to load configuration file, no correct configuration items were matched");
-            System.exit(-1);
         }
     }
 
+
+
     @Override
     public Map<String, String> handler(Map<String, String> resourceMap) {
+        logger.info("Load Configuration Success - active : {} size : {}",
+                resourceMap.getOrDefault(TROCHILIDAE_PROFILES_ACTIVE_CONF,"ROOT"),resourceMap.size());
         resourceMap.forEach((key,value)->logger.info("{} : {}",key,value));
         return resourceMap;
     }

@@ -1,6 +1,5 @@
 package com.upuphub.trochilidae.core.config;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -19,6 +18,8 @@ public interface Configuration {
     Boolean getBoolean(String key);
 
     Long getLong(String key);
+
+    Map<String, String> getAll();
 
     default void put(String id, String content) {
     }

@@ -24,7 +24,7 @@ public class ResourceConfigLoadTest {
     @Test
     @DisplayName("Resource Get From Configuration Factory")
     public void propertiesResourceLoadFromFactoryTest(){
-        assertEquals(ConfigurationFactory.getDefaultConfig().getString("trochilidae.application.name"),"Trochilidae-Test");
+        assertEquals(ConfigurationFactory.getDefaultConfig().getString("trochilidae.application.name"),"Trochilidae-Test-DEV");
         assertEquals(ConfigurationFactory.getDefaultConfig().getString("trochilidae.application.url"),"Trochilidae-URL");
     }
 
@@ -33,7 +33,7 @@ public class ResourceConfigLoadTest {
     @DisplayName("Resource Get From Bean Container")
     public void propertiesResourceLoadFromBeanContainerTest(){
         Configuration configuration =(Configuration)BeanFactory.getInstanceByClazz(ConfigurationManager.class);
-        assertEquals(configuration.getString("trochilidae.application.name"),"Trochilidae-Test");
+        assertEquals(configuration.getString("trochilidae.application.name"),"Trochilidae-Test-DEV");
         assertEquals(configuration.getString("trochilidae.application.url"),"Trochilidae-URL");
     }
 }

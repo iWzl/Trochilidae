@@ -37,6 +37,11 @@ public abstract class AbstractConfiguration implements Configuration{
     }
 
     @Override
+    public Map<String, String> getAll() {
+        return CONFIGURATION_CACHE;
+    }
+
+    @Override
     public void put(String key, String content) {
         CONFIGURATION_CACHE.put(key, content);
     }
