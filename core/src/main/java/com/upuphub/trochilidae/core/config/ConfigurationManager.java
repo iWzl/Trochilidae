@@ -135,7 +135,7 @@ public class ConfigurationManager implements Configuration,ResourceConfiguration
 
     @Override
     public Map<String, String> handler(Map<String, String> resourceMap) {
-        logger.info("Load Configuration Success - active : {} size : {}",
+        logger.info("Load Configuration Success - active : {}, size : {}",
                 resourceMap.getOrDefault(TROCHILIDAE_PROFILES_ACTIVE_CONF,"ROOT"),resourceMap.size());
         resourceMap.forEach((key,value)->logger.info("{} : {}",key,value));
         return resourceMap;
