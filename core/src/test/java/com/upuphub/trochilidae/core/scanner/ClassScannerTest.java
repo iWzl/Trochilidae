@@ -18,7 +18,7 @@ public class ClassScannerTest {
 
     @Test
     public void scanClassByPackageName(){
-        ClassFactory.loadClass(this.getClass());
+        ClassFactory.loadClass(new String[]{ClassScannerTest.class.getPackage().getName()});
         assertEquals(1, ClassFactory.CLASSES.size());
     }
 

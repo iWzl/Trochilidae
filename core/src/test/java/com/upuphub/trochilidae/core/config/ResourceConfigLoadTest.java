@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 资源加载配置
@@ -18,7 +18,7 @@ public class ResourceConfigLoadTest {
 
     @BeforeAll
     public static void initResourceLoad(){
-        ConfigurationFactory.loadConfigurationManger(ResourceConfigLoadTest.class);
+        ConfigurationFactory.loadResourceConfiguration(ResourceConfigLoadTest.class.getClassLoader(),new String[]{ResourceConfigLoadTest.class.getPackage().getName()});
     }
 
     @Test
