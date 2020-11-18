@@ -1,6 +1,6 @@
 package com.upuphub.trochilidae.core.factory;
 
-import com.upuphub.trochilidae.core.common.util.IocUtil;
+import com.upuphub.trochilidae.core.common.util.BeanHelper;
 import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
 import com.upuphub.trochilidae.core.config.Configuration;
 import com.upuphub.trochilidae.core.config.ConfigurationManager;
@@ -24,17 +24,17 @@ public class ConfigurationFactory {
     }
 
 
-    public static void loadConfigurationManger(Class<?> bootstrapClazz){
+    public static void loadResourceConfiguration(ClassLoader classLoader,String[] loadPackageNames){
         ConfigurationManager configurationManager = SingleConfigurationHolder.INSTANCE_CONFIGURATION_MANAGER;
-        BeanFactory.insertBean(IocUtil.getBeanName(ConfigurationManager.class),configurationManager);
-        initResourceConfigurationPostProcessList(bootstrapClazz);
-        configurationManager.loadConfigurationResources(bootstrapClazz);
+        BeanFactory.insertBean(BeanHelper.getBeanName(ConfigurationManager.class),configurationManager);
+        initResourceConfigurationPostProcessList(loadPackageNames);
+        configurationManager.loadConfigurationResources(classLoader);
     }
 
 
-    private static void initResourceConfigurationPostProcessList(Class<?> bootstrapClazz){
+    private static void initResourceConfigurationPostProcessList(String[] loadPackageNames){
         Set<Class<? extends ResourceConfigurationPostProcess>> resourceConfigurationPostProcessList
-                = ReflectionUtil.getSubClass(bootstrapClazz.getPackage().getName(), ResourceConfigurationPostProcess.class);
+                = ReflectionUtil.getSubClass(loadPackageNames, ResourceConfigurationPostProcess.class);
         if(null != resourceConfigurationPostProcessList && 0 != resourceConfigurationPostProcessList.size()){
             for (Class<? extends ResourceConfigurationPostProcess>  resourceConfigurationPostProcessClazz: resourceConfigurationPostProcessList) {
                 ResourceConfigurationPostProcess resourceConfigurationPostProcess = (ResourceConfigurationPostProcess)
@@ -43,7 +43,7 @@ public class ConfigurationFactory {
                     resourceConfigurationPostProcess = ReflectionUtil.newInstance(resourceConfigurationPostProcessClazz);
                 }
                 ConfigurationFactory.resourceConfigurationPostProcessList.add(resourceConfigurationPostProcess);
-                BeanFactory.insertBean(IocUtil.getBeanName(resourceConfigurationPostProcessClazz),resourceConfigurationPostProcess);
+                BeanFactory.insertBean(BeanHelper.getBeanName(resourceConfigurationPostProcessClazz),resourceConfigurationPostProcess);
             }
             ConfigurationFactory.resourceConfigurationPostProcessList = ConfigurationFactory.resourceConfigurationPostProcessList.stream()
                     .sorted(Comparator.comparing(ResourceConfigurationPostProcess::getOrder)).collect(Collectors.toList());

@@ -1,7 +1,7 @@
 package com.upuphub.trochilidae.core.factory;
 
 import com.upuphub.trochilidae.core.annotation.ioc.Component;
-import com.upuphub.trochilidae.core.common.util.IocUtil;
+import com.upuphub.trochilidae.core.common.util.BeanHelper;
 import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
 
 import java.lang.annotation.Annotation;
@@ -25,7 +25,7 @@ public final class BeanFactory {
     public static void loadBeans() {
         for (Class<? extends Annotation> loadBeanAnnotation : LOAD_BEAN_ANNOTATION) {
             ClassFactory.CLASSES.get(loadBeanAnnotation).forEach(targetBeanClass -> {
-                String beanName = IocUtil.getBeanName(targetBeanClass);
+                String beanName = BeanHelper.getBeanName(targetBeanClass);
                 Object beanInstance = ReflectionUtil.newInstance(targetBeanClass);
                 insertBean(beanName, beanInstance);
             });
@@ -37,6 +37,6 @@ public final class BeanFactory {
     }
 
     public static Object getInstanceByClazz(Class<?> clazz){
-        return BEANS.get(IocUtil.getBeanName(clazz));
+        return BEANS.get(BeanHelper.getBeanName(clazz));
     }
 }

@@ -72,8 +72,7 @@ public class ConfigurationManager implements Configuration,ResourceConfiguration
     }
 
 
-    public void loadConfigurationResources(Class<?> bootstrapClass) {
-        ClassLoader classLoader = bootstrapClass.getClassLoader();
+    public void loadConfigurationResources(ClassLoader classLoader) {
         for (String configName : Configuration.DEFAULT_CONFIG_NAMES) {
             URL url = classLoader.getResource(configName);
             Path resourcePath = null;
@@ -109,7 +108,6 @@ public class ConfigurationManager implements Configuration,ResourceConfiguration
 
             }
         }
-
     }
 
     private void loadChildConfigurationResources(ClassLoader classLoader,String fileNameEndWith,String profileActiveConfigKey){

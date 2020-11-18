@@ -23,14 +23,10 @@ import java.util.stream.Collectors;
 public class InterceptorFactory {
     private static List<Interceptor> interceptors = new ArrayList<>();
 
-    public static void loadInterceptors(Class<?> packageName){
-        loadInterceptors(packageName.getPackage().getName());
-    }
 
-
-    public static void loadInterceptors(String packageName) {
+    public static void loadInterceptors(String[] packageNames) {
         // 获取指定包中实现了 Interceptor 接口的类
-        Set<Class<? extends Interceptor>> interceptorClasses = ReflectionUtil.getSubClass(packageName, Interceptor.class);
+        Set<Class<? extends Interceptor>> interceptorClasses = ReflectionUtil.getSubClass(packageNames, Interceptor.class);
         // 获取被 @Aspect 标记的类
         Set<Class<?>> aspects = ClassFactory.CLASSES.get(Aspect.class);
         // 遍历所有拦截器类

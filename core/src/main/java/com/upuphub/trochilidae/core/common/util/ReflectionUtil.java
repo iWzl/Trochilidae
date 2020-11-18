@@ -67,11 +67,11 @@ public class ReflectionUtil {
     /**
      * Get the implementation class of the interface
      *
-     * @param packageName    specified package name
+     * @param packageNames    specified package name
      * @param interfaceClass specified interface
      */
-    public static <T> Set<Class<? extends T>> getSubClass(String packageName, Class<T> interfaceClass) {
-        Reflections reflections = new Reflections(packageName);
+    public static <T> Set<Class<? extends T>> getSubClass(Object[] packageNames, Class<T> interfaceClass) {
+        Reflections reflections = new Reflections(packageNames);
         return reflections.getSubTypesOf(interfaceClass);
 
     }

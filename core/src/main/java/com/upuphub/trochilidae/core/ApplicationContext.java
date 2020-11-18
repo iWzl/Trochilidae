@@ -1,5 +1,6 @@
 package com.upuphub.trochilidae.core;
 
+import com.upuphub.trochilidae.core.annotation.bean.ComponentScan;
 import com.upuphub.trochilidae.core.aop.factory.InterceptorFactory;
 import com.upuphub.trochilidae.core.banner.Banner;
 import com.upuphub.trochilidae.core.exception.SingleBeanCreateException;
@@ -7,6 +8,8 @@ import com.upuphub.trochilidae.core.factory.BeanFactory;
 import com.upuphub.trochilidae.core.factory.ClassFactory;
 import com.upuphub.trochilidae.core.factory.ConfigurationFactory;
 import com.upuphub.trochilidae.core.ioc.DependencyInjection;
+
+import java.util.Objects;
 
 
 /**
@@ -24,18 +27,26 @@ public final class ApplicationContext {
         }
     }
 
-    public void run(Class<?> bootstrapClazz){
+    public void run(Class<?> bootstrapClass){
         Banner.print();
+        // load class package names
+        String[] loadPackageNames = parseLoadedPackageNameByBootstrapClass(bootstrapClass);
         // Load classes with custom annotation
-        ClassFactory.loadClass(bootstrapClazz);
+        ClassFactory.loadClass(loadPackageNames);
         // Load resource from yaml or properties
-        ConfigurationFactory.loadConfigurationManger(bootstrapClazz);
+        ConfigurationFactory.loadResourceConfiguration(bootstrapClass.getClassLoader(),loadPackageNames);
         // Load beans managed by the ioc container
         BeanFactory.loadBeans();
         // Load interceptors
-        InterceptorFactory.loadInterceptors(bootstrapClazz);
+        InterceptorFactory.loadInterceptors(loadPackageNames);
         // Traverse all the beans in the ioc container and inject instances for all @Autowired annotated attributes.
-        DependencyInjection.dependencyInjection(bootstrapClazz);
+        DependencyInjection.inject(loadPackageNames);
+    }
+
+    private String[] parseLoadedPackageNameByBootstrapClass(Class<?> bootstrapClass){
+        ComponentScan componentScan = bootstrapClass.getAnnotation(ComponentScan.class);
+        return !Objects.isNull(componentScan) ? componentScan.value()
+                : new String[]{bootstrapClass.getPackage().getName()};
     }
 
 

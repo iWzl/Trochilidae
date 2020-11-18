@@ -2,7 +2,7 @@ package com.upuphub.trochilidae.core.common.util;
 
 import com.upuphub.trochilidae.core.annotation.ioc.Component;
 
-public class IocUtil {
+public class BeanHelper {
     /**
      * get the bean name
      *
