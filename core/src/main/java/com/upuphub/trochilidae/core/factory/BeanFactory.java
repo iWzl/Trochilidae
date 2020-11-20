@@ -1,6 +1,8 @@
 package com.upuphub.trochilidae.core.factory;
 
 import com.upuphub.trochilidae.core.annotation.ioc.Component;
+import com.upuphub.trochilidae.core.aop.factory.AopProxyBeanPostProcessorFactory;
+import com.upuphub.trochilidae.core.aop.intercept.BeanPostProcessor;
 import com.upuphub.trochilidae.core.common.util.BeanHelper;
 import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
 
@@ -31,6 +33,13 @@ public final class BeanFactory {
             });
         }
     }
+    public static void applyBeanPostProcessors() {
+        BEANS.replaceAll((beanName, beanInstance) -> {
+            BeanPostProcessor beanPostProcessor = AopProxyBeanPostProcessorFactory.get(beanInstance.getClass());
+            return beanPostProcessor.postProcessAfterInitialization(beanInstance);
+        });
+    }
+
 
     public static void insertBean(String beanName,Object beanInstance){
         BEANS.put(beanName, beanInstance);

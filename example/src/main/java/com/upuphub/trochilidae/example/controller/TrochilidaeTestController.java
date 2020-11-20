@@ -26,12 +26,14 @@ public class TrochilidaeTestController {
     }
 
 
+
+
     @GetMapping(path = "/user/{name}",produces = HttpMediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage<UserRsp> printHelloWithAge(@RequestParam("hello") Integer age, @PathVariable("name")String name){
+    public ServiceResponseMessage<UserRsp> printHelloWithAge(@RequestParam("age") Integer age, @PathVariable("name")String name){
         UserRsp userRsp = new UserRsp();
         userRsp.setAge(age);
         userRsp.setName(name);
-        userRsp.setDescription(UUID.randomUUID().toString());
+        userRsp.setDescription(trochilidaeTestService.base64EncodeName(name));
         return ServiceResponseMessage.createBySuccessCodeMessage(userRsp);
     }
 

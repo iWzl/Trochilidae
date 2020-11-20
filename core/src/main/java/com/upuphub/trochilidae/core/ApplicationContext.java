@@ -41,6 +41,9 @@ public final class ApplicationContext {
         InterceptorFactory.loadInterceptors(loadPackageNames);
         // Traverse all the beans in the ioc container and inject instances for all @Autowired annotated attributes.
         DependencyInjection.inject(loadPackageNames);
+        // Applies bean post processors on the classes which are from ClassFactory.
+        // For example, the class annotated by @Component
+        BeanFactory.applyBeanPostProcessors();
     }
 
     private String[] parseLoadedPackageNameByBootstrapClass(Class<?> bootstrapClass){
@@ -48,7 +51,6 @@ public final class ApplicationContext {
         return !Objects.isNull(componentScan) ? componentScan.value()
                 : new String[]{bootstrapClass.getPackage().getName()};
     }
-
 
 
 

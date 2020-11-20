@@ -1,17 +1,22 @@
 package com.upuphub.trochilidae.core.ioc;
 
-import com.upuphub.trochilidae.core.annotation.bean.ComponentScan;
 import com.upuphub.trochilidae.core.annotation.ioc.Autowired;
 import com.upuphub.trochilidae.core.annotation.ioc.Qualifier;
+import com.upuphub.trochilidae.core.annotation.ioc.Value;
+import com.upuphub.trochilidae.core.aop.factory.AopProxyBeanPostProcessorFactory;
+import com.upuphub.trochilidae.core.aop.intercept.BeanPostProcessor;
 import com.upuphub.trochilidae.core.common.util.BeanHelper;
 import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
+import com.upuphub.trochilidae.core.config.Configuration;
+import com.upuphub.trochilidae.core.config.ConfigurationManager;
 import com.upuphub.trochilidae.core.exception.CanNotDetermineTargetBeanException;
 import com.upuphub.trochilidae.core.exception.InterfaceNotHaveImplementedClassException;
 import com.upuphub.trochilidae.core.factory.BeanFactory;
 
 import java.lang.reflect.Field;
-import java.util.Objects;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 自动注入的Bean初始化管理器
@@ -22,6 +27,8 @@ import java.util.Set;
 public class AutowiredBeanInitialization {
 
     private final String[] packageNames;
+
+    private static final Map<String, Object> SINGLETON_OBJECTS = new ConcurrentHashMap<>(64);
 
     public AutowiredBeanInitialization(String[] packageNames) {
        this.packageNames = packageNames;
@@ -35,13 +42,22 @@ public class AutowiredBeanInitialization {
             for (Field beanField : beanFields) {
                 if (beanField.isAnnotationPresent(Autowired.class)) {
                     Object beanFieldInstance = processAutowiredAnnotationField(beanField);
-
+                    String beanFieldName = BeanHelper.getBeanName(beanField.getType());
+                    // 解决循环依赖问题
+                    beanFieldInstance = resolveCircularDependency(beanInstance, beanFieldInstance, beanFieldName);
+                    // AOP
+                    BeanPostProcessor beanPostProcessor = AopProxyBeanPostProcessorFactory.get(beanField.getType());
+                    beanFieldInstance = beanPostProcessor.postProcessAfterInitialization(beanFieldInstance);
+                    ReflectionUtil.setField(beanInstance, beanField, beanFieldInstance);
+                }
+                if (beanField.isAnnotationPresent(Value.class)) {
+                    Object convertedValue = processValueAnnotationField(beanField);
+                    ReflectionUtil.setField(beanInstance, beanField, convertedValue);
                 }
             }
         }
 
     }
-
 
     /**
      * 处理被 @Autowired 注解标记的字段
@@ -72,6 +88,34 @@ public class AutowiredBeanInitialization {
         beanFieldInstance = BeanFactory.BEANS.get(beanFieldName);
         if (beanFieldInstance == null) {
             throw new CanNotDetermineTargetBeanException("can not determine target bean of" + beanFieldClass.getName());
+        }
+        return beanFieldInstance;
+    }
+
+
+    /**
+     * 处理被 @Value 注解标记的字段
+     *
+     * @param beanField 目标类的字段
+     * @return 目标类的字段对应的对象
+     */
+    private Object processValueAnnotationField(Field beanField) {
+        String key = beanField.getDeclaredAnnotation(Value.class).value();
+        key = "".equals(key) ? beanField.getName() : key;
+        Configuration configuration =(Configuration)BeanFactory.getInstanceByClazz(ConfigurationManager.class);
+        String value = configuration.getString(key);
+        if (value == null) {
+            throw new IllegalArgumentException("can not find target value for property:{" + key + "}");
+        }
+        return BeanHelper.convertBeanType(beanField.getType(), value);
+    }
+
+    private Object resolveCircularDependency(Object beanInstance, Object beanFieldInstance, String beanFieldName) {
+        if (SINGLETON_OBJECTS.containsKey(beanFieldName)) {
+            beanFieldInstance = SINGLETON_OBJECTS.get(beanFieldName);
+        } else {
+            SINGLETON_OBJECTS.put(beanFieldName, beanFieldInstance);
+            initialize(beanInstance);
         }
         return beanFieldInstance;
     }

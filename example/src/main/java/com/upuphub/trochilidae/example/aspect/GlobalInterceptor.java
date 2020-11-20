@@ -2,22 +2,23 @@ package com.upuphub.trochilidae.example.aspect;
 
 import com.upuphub.trochilidae.core.aop.intercept.Interceptor;
 import com.upuphub.trochilidae.core.aop.intercept.MethodInvocation;
+import com.upuphub.trochilidae.example.controller.TrochilidaeTestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * @author shuang.kou
- * @date  Time 2020年10月09日 21:28:00
- **/
+
 public class GlobalInterceptor extends Interceptor {
+    private final static Logger logger = LoggerFactory.getLogger(GlobalInterceptor.class);
     @Override
     public Object intercept(MethodInvocation methodInvocation) {
-        System.out.println(GlobalInterceptor.class.getSimpleName() + " before method：" + methodInvocation.getTargetMethod().getName());
+        logger.debug(" before method：" + methodInvocation.getTargetMethod().getName());
         Object result = methodInvocation.proceed();
-        System.out.println(GlobalInterceptor.class.getSimpleName() + " after method：" + methodInvocation.getTargetMethod().getName());
+        logger.debug(" after method：" + methodInvocation.getTargetMethod().getName());
         return result;
     }
 
     @Override
     public boolean supports(Object bean) {
-        return true;
+        return bean instanceof TrochilidaeTestController;
     }
 }

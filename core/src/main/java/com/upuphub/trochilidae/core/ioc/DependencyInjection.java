@@ -2,8 +2,6 @@ package com.upuphub.trochilidae.core.ioc;
 
 import com.upuphub.trochilidae.core.factory.BeanFactory;
 
-import java.util.Map;
-
 /**
  * 依赖注入
  *
@@ -12,16 +10,14 @@ import java.util.Map;
  **/
 public class DependencyInjection {
 
-
-
     /**
      * 遍历ioc容器所有bean的属性, 为所有带@Autowired注解的属性注入实例
      */
     public static void inject(String[] packageNames) {
-        Map<String, Object> beans = BeanFactory.BEANS;
+        AutowiredBeanInitialization autowiredBeanInitialization = new AutowiredBeanInitialization(packageNames);
         //创建好的bean都放入对象工厂
-        if (beans.size() > 0) {
-
+        if (BeanFactory.BEANS.size() > 0) {
+            BeanFactory.BEANS.values().forEach(autowiredBeanInitialization::initialize);
         }
     }
 }

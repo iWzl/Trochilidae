@@ -1,5 +1,8 @@
 package com.upuphub.trochilidae.web.server;
 
+import com.upuphub.trochilidae.core.config.Configuration;
+import com.upuphub.trochilidae.core.factory.BeanFactory;
+import com.upuphub.trochilidae.core.factory.ConfigurationFactory;
 import com.upuphub.trochilidae.web.common.constant.SystemConstants;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -26,7 +29,8 @@ import org.slf4j.LoggerFactory;
 public class HttpServer {
     private final Logger logger = LoggerFactory.getLogger(HttpServer.class);
 
-    private static final int DEFAULT_PORT = 8080;
+    private static final int DEFAULT_PORT = ConfigurationFactory.getDefaultConfig().getInt("trochilidae.web.port");
+
 
     public void start() {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);

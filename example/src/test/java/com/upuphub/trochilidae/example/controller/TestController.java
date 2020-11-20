@@ -20,7 +20,7 @@ public class TestController {
 
     @BeforeAll
     static void setUp() {
-        RestAssured.baseURI = "http://localhost:8080";
+        RestAssured.baseURI = "http://localhost:8081";
     }
 
     @Test

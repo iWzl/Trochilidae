@@ -1,11 +1,11 @@
 package com.upuphub.trochilidae.core.aop.factory;
 
-
 import com.upuphub.trochilidae.core.aop.intercept.BeanPostProcessor;
 import com.upuphub.trochilidae.core.aop.intercept.CglibAopProxyBeanPostProcessor;
 import com.upuphub.trochilidae.core.aop.intercept.JdkAopProxyBeanPostProcessor;
 
-public class BeanPostProcessorFactory {
+
+public class AopProxyBeanPostProcessorFactory {
 
     /**
      * @param beanClass 目标类
@@ -19,3 +19,6 @@ public class BeanPostProcessorFactory {
         }
     }
 }
+
+
+
