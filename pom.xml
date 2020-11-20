@@ -30,7 +30,6 @@
     <modules>
         <module>core</module>
         <module>security</module>
-        <module>example</module>
         <module>web</module>
     </modules>
 
