@@ -1,10 +1,8 @@
 package com.upuphub.trochilidae.example.controller;
 
-import com.upuphub.trochilidae.example.TrochilidaeExampleApplication;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 
 import static io.restassured.RestAssured.when;
