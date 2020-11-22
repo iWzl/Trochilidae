@@ -3,6 +3,7 @@ package com.upuphub.trochilidae.example.controller;
 import com.upuphub.trochilidae.core.annotation.ioc.Autowired;
 import com.upuphub.trochilidae.example.bean.UserReq;
 import com.upuphub.trochilidae.example.bean.UserRsp;
+import com.upuphub.trochilidae.example.injection.CyclicInjectionClassA;
 import com.upuphub.trochilidae.example.service.TrochilidaeTestService;
 import com.upuphub.trochilidae.web.annotation.*;
 import com.upuphub.trochilidae.web.common.http.DefaultHttpRsp;
@@ -18,6 +19,9 @@ public class TrochilidaeTestController {
 
     @Autowired
     private TrochilidaeTestService trochilidaeTestService;
+
+    @Autowired
+    private CyclicInjectionClassA cyclicInjectionClassA;
 
     @GetMapping
     public ServiceResponseMessage<DefaultHttpRsp> hello(){
