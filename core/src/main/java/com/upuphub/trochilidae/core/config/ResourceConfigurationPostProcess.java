@@ -10,7 +10,7 @@ import java.util.Map;
  **/
 @FunctionalInterface
 public interface ResourceConfigurationPostProcess {
-    Map<String,String> handler(Map<String, String> resourceMap);
+    Map<String,String> processingHandler(Map<String, String> configurations);
 
     default int getOrder(){
         return 1;

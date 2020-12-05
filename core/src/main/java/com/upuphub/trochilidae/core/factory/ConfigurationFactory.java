@@ -17,6 +17,10 @@ import java.util.stream.Collectors;
  * @date create time 2020-11-16 18:06
  **/
 public class ConfigurationFactory {
+    private static final String CONFIG_SYSTEM_PROPERTY_KEY = "-D";
+    private static final String CONFIG_APPLICATION_PROPERTY_KEY = "-T";
+    private static final String CONFIG_PROPERTY_MAPPER_TAG = "=";
+
     private static List<ResourceConfigurationPostProcess> resourceConfigurationPostProcessList = new LinkedList<>();
 
     public static Configuration getDefaultConfig() {
@@ -52,9 +56,49 @@ public class ConfigurationFactory {
 
     public static Map<String, String> runResourceConfigurationPostProcess(Map<String, String> resourceConfigurationMap){
         for (ResourceConfigurationPostProcess resourceConfigurationPostProcess : resourceConfigurationPostProcessList) {
-            resourceConfigurationMap = resourceConfigurationPostProcess.handler(resourceConfigurationMap);
+            resourceConfigurationMap = resourceConfigurationPostProcess.processingHandler(resourceConfigurationMap);
         }
         return resourceConfigurationMap;
+    }
+
+    public static void loadBootstrapConfiguration(String... args) {
+        ConfigurationManager configurationManager = SingleConfigurationHolder.INSTANCE_CONFIGURATION_MANAGER;
+        loadSystemPropertyFromBootstrapConfig(args);
+        Map<String, String> configMap = analyzeApplicationBootstrapConfiguration(args);
+        configurationManager.supplementApplicationConfigurations(configMap);
+    }
+
+    private static Map<String, String> analyzeApplicationBootstrapConfiguration(String[] args) {
+        Map<String, String> configurations = new HashMap<>(16);
+        for (String arg : args) {
+            assert null != arg;
+            if(arg.contains(CONFIG_PROPERTY_MAPPER_TAG) && arg.startsWith(CONFIG_APPLICATION_PROPERTY_KEY)){
+                String[] config = arg.substring(2).split(CONFIG_PROPERTY_MAPPER_TAG);
+                String propertyKey = config[0];
+                String propertyValue = config[1];
+                if(null != propertyKey && !"".equals(propertyKey)
+                        && null != propertyValue && !"".equals(propertyValue)){
+                    configurations.put(propertyKey.toLowerCase(),propertyValue.toLowerCase());
+                }
+            }
+        }
+        return configurations;
+    }
+
+
+    private static void loadSystemPropertyFromBootstrapConfig(String... args){
+        for (String arg : args) {
+            assert null != arg;
+            if(arg.contains(CONFIG_PROPERTY_MAPPER_TAG) && arg.startsWith(CONFIG_SYSTEM_PROPERTY_KEY)){
+                String[] config = arg.substring(2).split(CONFIG_PROPERTY_MAPPER_TAG);
+                String systemPropertyKey = config[0];
+                String systemPropertyValue = config[1];
+                if(null != systemPropertyKey && !"".equals(systemPropertyKey)
+                        && null != systemPropertyValue && !"".equals(systemPropertyValue)){
+                    System.setProperty(systemPropertyKey.toLowerCase(),systemPropertyValue.toLowerCase());
+                }
+            }
+        }
     }
 
     private static class SingleConfigurationHolder {

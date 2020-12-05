@@ -4,6 +4,6 @@ import com.upuphub.trochilidae.web.WebApplicationContext;
 
 public class TrochilidaeExampleApplication {
     public static void main(String[] args) {
-        WebApplicationContext.getWebApplicationContext().run(TrochilidaeExampleApplication.class);
+        WebApplicationContext.getWebApplicationContext().run(TrochilidaeExampleApplication.class,args);
     }
 }

@@ -27,7 +27,7 @@ public final class ApplicationContext {
         }
     }
 
-    public void run(Class<?> bootstrapClass){
+    public void run(Class<?> bootstrapClass,String... args){
         Banner.print();
         // load class package names
         String[] loadPackageNames = parseLoadedPackageNameByBootstrapClass(bootstrapClass);
@@ -35,6 +35,7 @@ public final class ApplicationContext {
         ClassFactory.loadClass(loadPackageNames);
         // Load resource from yaml or properties
         ConfigurationFactory.loadResourceConfiguration(bootstrapClass.getClassLoader(),loadPackageNames);
+        ConfigurationFactory.loadBootstrapConfiguration(args);
         // Load beans managed by the ioc container
         BeanFactory.loadBeans();
         // Load interceptors

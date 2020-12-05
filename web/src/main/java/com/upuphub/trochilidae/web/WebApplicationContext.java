@@ -23,10 +23,10 @@ public final class WebApplicationContext {
         }
     }
 
-    public void run(Class<?> bootstrapClazz){
+    public void run(Class<?> bootstrapClazz,String... args){
         ClassFactory.addScanAnnotation(RestController.class);
         BeanFactory.addLoadBeanAnnotation(RestController.class);
-        ApplicationContext.getApplicationContext().run(bootstrapClazz);
+        ApplicationContext.getApplicationContext().run(bootstrapClazz,args);
         RouteMethodMapper.loadRoutes();
         new HttpServer().start();
     }

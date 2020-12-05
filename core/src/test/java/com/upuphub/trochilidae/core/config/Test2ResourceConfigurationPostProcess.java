@@ -15,7 +15,7 @@ public class Test2ResourceConfigurationPostProcess implements ResourceConfigurat
     private static final Logger logger = LoggerFactory.getLogger( Test2ResourceConfigurationPostProcess.class);
 
     @Override
-    public Map<String, String> handler(Map<String, String> resourceMap) {
+    public Map<String, String> processingHandler(Map<String, String> resourceMap) {
         logger.info("Test2ResourceConfigurationPostProcess Handler Running ....");
         return resourceMap;
     }

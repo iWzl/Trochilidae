@@ -16,7 +16,7 @@ public class TestResourceConfigurationPostProcess implements ResourceConfigurati
     private static final Logger logger = LoggerFactory.getLogger( TestResourceConfigurationPostProcess.class);
 
     @Override
-    public Map<String, String> handler(Map<String, String> resourceMap) {
+    public Map<String, String> processingHandler(Map<String, String> resourceMap) {
         String url = resourceMap.get("trochilidae.application.url");
         resourceMap.put("trochilidae.application.url", new String(Base64.getDecoder().decode(url)));
         logger.info("TestResourceConfigurationPostProcess Handler Running ....");
