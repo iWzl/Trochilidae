@@ -1,9 +1,8 @@
 package com.upuphub.trochilidae.web.serializer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.upuphub.trochilidae.core.logging.Logger;
+import com.upuphub.trochilidae.core.logging.LoggerFactory;
 
-import java.io.IOException;
 /**
  * Bean 序列化器
  *

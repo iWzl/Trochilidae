@@ -5,8 +5,8 @@ import com.upuphub.trochilidae.core.config.resource.ResourceLoader;
 import com.upuphub.trochilidae.core.config.resource.property.PropertiesResourceLoader;
 import com.upuphub.trochilidae.core.config.resource.yaml.YamlResourceLoader;
 import com.upuphub.trochilidae.core.factory.ConfigurationFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.upuphub.trochilidae.core.logging.Logger;
+import com.upuphub.trochilidae.core.logging.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

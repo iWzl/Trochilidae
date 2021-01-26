@@ -2,10 +2,10 @@ package com.upuphub.trochilidae.core.common.util;
 
 import com.upuphub.trochilidae.core.exception.CanNotInvokeTargetMethodException;
 import com.upuphub.trochilidae.core.exception.CheckClassScanParamsException;
+import com.upuphub.trochilidae.core.logging.Logger;
+import com.upuphub.trochilidae.core.logging.LoggerFactory;
 import org.reflections.Reflections;
 import org.reflections.scanners.TypeAnnotationsScanner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -23,6 +23,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ReflectionUtil {
     private static final Logger logger = LoggerFactory.getLogger(ReflectionUtil.class);
 
+    static {
+        Reflections.log = null;
+    }
+
 
     /**
      * scan the classes marked by the specified annotation in the specified package
@@ -34,7 +38,7 @@ public class ReflectionUtil {
     public static Set<Class<?>> scanAnnotatedClass(String[] packageNames, Class<? extends Annotation> annotation) {
         Reflections reflections = new Reflections(packageNames, new TypeAnnotationsScanner());
         Set<Class<?>> annotatedClass = reflections.getTypesAnnotatedWith(annotation, true);
-        logger.debug("The number of class Annotated with  @{} :[{}]",annotation.getSimpleName(),annotatedClass.size());
+        logger.trace("The number of class Annotated with  @{} :[{}]",annotation.getSimpleName(),annotatedClass.size());
         return annotatedClass;
     }
 
@@ -55,7 +59,7 @@ public class ReflectionUtil {
         for (Class<? extends Annotation> annotation : annotationList) {
             Set<Class<?>> annotatedClass = reflections.getTypesAnnotatedWith(annotation, true);
             if(!annotatedClass.isEmpty()){
-                logger.debug("The number of class Annotated with  @{} :[{}]",annotation.getSimpleName(),annotatedClass.size());
+                logger.trace("The number of class Annotated with  @{} :[{}]",annotation.getSimpleName(),annotatedClass.size());
                 annotatedClassesMap.put(annotation,annotatedClass) ;
             }
         }

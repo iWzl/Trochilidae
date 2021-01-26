@@ -1,5 +1,7 @@
 package com.upuphub.trochilidae.web.server;
 
+import com.upuphub.trochilidae.core.logging.Logger;
+import com.upuphub.trochilidae.core.logging.LoggerFactory;
 import com.upuphub.trochilidae.web.common.lang.HttpMediaType;
 import com.upuphub.trochilidae.web.common.util.UrlUtil;
 import com.upuphub.trochilidae.web.exception.RequestMappingNotFindException;
@@ -12,8 +14,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+;
 
 /**
  * Http Server Handler

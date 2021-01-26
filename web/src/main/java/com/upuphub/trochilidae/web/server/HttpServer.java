@@ -1,6 +1,8 @@
 package com.upuphub.trochilidae.web.server;
 
 import com.upuphub.trochilidae.core.factory.ConfigurationFactory;
+import com.upuphub.trochilidae.core.logging.Logger;
+import com.upuphub.trochilidae.core.logging.LoggerFactory;
 import com.upuphub.trochilidae.web.common.constant.SystemConstants;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -11,8 +13,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.NettyRuntime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * 基于Netty的Http服务器
@@ -40,7 +41,7 @@ public class HttpServer {
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
                     //表示系统用于临时存放已完成三次握手的请求的队列的最大长度,如果连接建立频繁，服务器处理创建新连接较慢，可以适当调大这个参数
                     .option(ChannelOption.SO_BACKLOG, 128)
-                    .handler(new LoggingHandler(LogLevel.DEBUG))
+                    .handler(new LoggingHandler(LogLevel.TRACE))
                     .childHandler(trochilidaeChannelInitializer);
             Channel ch = b.bind(DEFAULT_PORT).sync().channel();
             logger.info(SystemConstants.LOG_PORT_BANNER, DEFAULT_PORT);
