@@ -32,6 +32,7 @@
         <module>security</module>
         <module>web</module>
         <module>cache</module>
+        <module>orm-mybatis</module>
     </modules>
 
 
