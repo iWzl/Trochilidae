@@ -2,10 +2,12 @@ package com.upuphub.trochilidae.core.factory;
 
 import com.upuphub.trochilidae.core.annotation.aop.Aspect;
 import com.upuphub.trochilidae.core.annotation.ioc.Component;
-import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
+import com.upuphub.trochilidae.core.util.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -29,6 +31,6 @@ public class ClassFactory {
     }
 
     public static void loadClass(String[] packageNames) {
-        CLASSES.putAll(ReflectionUtil.scanAnnotatedClasses(packageNames,SCAN_ANNOTATION));
+        CLASSES.putAll(ReflectionUtils.scanAnnotatedClasses(packageNames,SCAN_ANNOTATION));
     }
 }

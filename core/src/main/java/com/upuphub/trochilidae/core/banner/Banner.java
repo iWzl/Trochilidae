@@ -15,6 +15,23 @@ import java.nio.file.Paths;
  **/
 public class Banner {
     public static final String CUSTOM_BANNER_NAME = "banner.txt";
+    public static final String DEFAULT_BANNER_WORDING = "\n" +
+            "████████╗██████╗  ██████╗  ██████╗██╗  ██╗██╗██╗     ██╗██████╗  █████╗ ███████╗\n" +
+            "╚══██╔══╝██╔══██╗██╔═══██╗██╔════╝██║  ██║██║██║     ██║██╔══██╗██╔══██╗██╔════╝\n" +
+            "   ██║   ██████╔╝██║   ██║██║     ███████║██║██║     ██║██║  ██║███████║█████╗  \n" +
+            "   ██║   ██╔══██╗██║   ██║██║     ██╔══██║██║██║     ██║██║  ██║██╔══██║██╔══╝  \n" +
+            "   ██║   ██║  ██║╚██████╔╝╚██████╗██║  ██║██║███████╗██║██████╔╝██║  ██║███████╗\n" +
+            "   ╚═╝   ╚═╝  ╚═╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝ Trochilidae 1.0-SNAPSHOT Power by Leo\n";
+
+    public static final String DEFAULT_BANNER_PIC =  "\n" +
+            "                      .--.    \n" +
+            "                    .\"  o \\__ \n" +
+            "                 _.-\"    ,(  `\n" +
+            "             _.-\"      ,;;|   \n" +
+            "        _.-=\" _,\"    ,,;;;'   \n" +
+            "    .-\"`_.-\"``-..,,;;;;:'     \n" +
+            "    `\"'`          `\\`\\        \n" +
+            "                   /^\\\\\\      Trochilidae 1.0-SNAPSHOT Power by Leo";
 
     public static void print() {
         URL url = Thread.currentThread().getContextClassLoader().getResource(CUSTOM_BANNER_NAME);
@@ -24,15 +41,7 @@ public class Banner {
                 Files.lines(path).forEach(System.out::println);
             } catch (URISyntaxException | IOException ignore) { }
         } else {
-            System.out.println(
-                    "                      .--.    \n" +
-                    "                    .\"  o \\__ \n" +
-                    "                 _.-\"    ,(  `\n" +
-                    "             _.-\"      ,;;|   \n" +
-                    "        _.-=\" _,\"    ,,;;;'   \n" +
-                    "    .-\"`_.-\"``-..,,;;;;:'     \n" +
-                    "    `\"'`          `\\`\\        \n" +
-                    "                   /^\\\\\\      Trochilidae 1.0-SNAPSHOT Power by Leo");
+            System.out.println(DEFAULT_BANNER_WORDING);
         }
     }
 }

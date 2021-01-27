@@ -3,8 +3,8 @@ package com.upuphub.trochilidae.core.factory;
 import com.upuphub.trochilidae.core.annotation.ioc.Component;
 import com.upuphub.trochilidae.core.aop.factory.AopProxyBeanPostProcessorFactory;
 import com.upuphub.trochilidae.core.aop.intercept.BeanPostProcessor;
-import com.upuphub.trochilidae.core.common.util.BeanHelper;
-import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
+import com.upuphub.trochilidae.core.common.BeanHelper;
+import com.upuphub.trochilidae.core.util.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.HashSet;
@@ -28,7 +28,7 @@ public final class BeanFactory {
         for (Class<? extends Annotation> loadBeanAnnotation : LOAD_BEAN_ANNOTATION) {
             ClassFactory.CLASSES.get(loadBeanAnnotation).forEach(targetBeanClass -> {
                 String beanName = BeanHelper.getBeanName(targetBeanClass);
-                Object beanInstance = ReflectionUtil.newInstance(targetBeanClass);
+                Object beanInstance = ReflectionUtils.newInstance(targetBeanClass);
                 insertBean(beanName, beanInstance);
             });
         }

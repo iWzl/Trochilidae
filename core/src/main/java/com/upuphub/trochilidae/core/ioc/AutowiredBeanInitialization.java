@@ -5,13 +5,13 @@ import com.upuphub.trochilidae.core.annotation.ioc.Qualifier;
 import com.upuphub.trochilidae.core.annotation.ioc.Value;
 import com.upuphub.trochilidae.core.aop.factory.AopProxyBeanPostProcessorFactory;
 import com.upuphub.trochilidae.core.aop.intercept.BeanPostProcessor;
-import com.upuphub.trochilidae.core.common.util.BeanHelper;
-import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
+import com.upuphub.trochilidae.core.common.BeanHelper;
 import com.upuphub.trochilidae.core.config.Configuration;
 import com.upuphub.trochilidae.core.config.ConfigurationManager;
 import com.upuphub.trochilidae.core.exception.CanNotDetermineTargetBeanException;
 import com.upuphub.trochilidae.core.exception.InterfaceNotHaveImplementedClassException;
 import com.upuphub.trochilidae.core.factory.BeanFactory;
+import com.upuphub.trochilidae.core.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -48,11 +48,11 @@ public class AutowiredBeanInitialization {
                     // AOP
                     BeanPostProcessor beanPostProcessor = AopProxyBeanPostProcessorFactory.get(beanField.getType());
                     beanFieldInstance = beanPostProcessor.postProcessAfterInitialization(beanFieldInstance);
-                    ReflectionUtil.setField(beanInstance, beanField, beanFieldInstance);
+                    ReflectionUtils.setField(beanInstance, beanField, beanFieldInstance);
                 }
                 if (beanField.isAnnotationPresent(Value.class)) {
                     Object convertedValue = processValueAnnotationField(beanField);
-                    ReflectionUtil.setField(beanInstance, beanField, convertedValue);
+                    ReflectionUtils.setField(beanInstance, beanField, convertedValue);
                 }
             }
         }
@@ -71,7 +71,7 @@ public class AutowiredBeanInitialization {
         Object beanFieldInstance;
         if (beanFieldClass.isInterface()) {
             @SuppressWarnings("unchecked")
-            Set<Class<?>> subClasses = ReflectionUtil.getSubClass(packageNames,(Class<Object>) beanFieldClass);
+            Set<Class<?>> subClasses = ReflectionUtils.getSubClass(packageNames,(Class<Object>) beanFieldClass);
             if (subClasses.size() == 0) {
                 throw new InterfaceNotHaveImplementedClassException(beanFieldClass.getName() + "is interface and do not have implemented class exception");
             }

@@ -1,4 +1,4 @@
-package com.upuphub.trochilidae.core.common.util;
+package com.upuphub.trochilidae.core.common;
 
 import com.upuphub.trochilidae.core.annotation.ioc.Component;
 

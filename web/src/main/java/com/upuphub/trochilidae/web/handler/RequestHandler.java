@@ -1,7 +1,7 @@
 package com.upuphub.trochilidae.web.handler;
 
-import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
 import com.upuphub.trochilidae.core.factory.BeanFactory;
+import com.upuphub.trochilidae.core.util.ReflectionUtils;
 import com.upuphub.trochilidae.web.common.entity.RequestMappingDetail;
 import com.upuphub.trochilidae.web.common.entity.RequestParamManager;
 import com.upuphub.trochilidae.web.common.lang.HttpMediaType;
@@ -69,10 +69,10 @@ public interface RequestHandler {
         String beanName = BeanHelper.getBeanName(requestMappingDetail.getTargetMethod().getDeclaringClass());
         Object targetObject = BeanFactory.BEANS.get(beanName);
         if (targetMethod.getReturnType() == void.class) {
-            ReflectionUtil.executeTargetMethodNoResult(targetObject, targetMethod, targetMethodParams.toArray());
+            ReflectionUtils.executeTargetMethodNoResult(targetObject, targetMethod, targetMethodParams.toArray());
             return FullHttpResponseFactory.buildDefaultFullHttpResponseNoResult(requestMappingDetail.getProduces());
         }else {
-            Object result = ReflectionUtil.executeTargetMethod(targetObject, targetMethod, targetMethodParams.toArray());
+            Object result = ReflectionUtils.executeTargetMethod(targetObject, targetMethod, targetMethodParams.toArray());
             return FullHttpResponseFactory.buildDefaultFullHttpResponseWithResult(requestMappingDetail.getProduces(),result);
         }
     }

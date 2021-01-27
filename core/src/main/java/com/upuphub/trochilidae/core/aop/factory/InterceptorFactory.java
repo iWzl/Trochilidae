@@ -4,9 +4,9 @@ import com.upuphub.trochilidae.core.annotation.aop.Aspect;
 import com.upuphub.trochilidae.core.annotation.aop.Order;
 import com.upuphub.trochilidae.core.aop.intercept.Interceptor;
 import com.upuphub.trochilidae.core.aop.intercept.InternallyAspectInterceptor;
-import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
 import com.upuphub.trochilidae.core.exception.CannotInitializeConstructorException;
 import com.upuphub.trochilidae.core.factory.ClassFactory;
+import com.upuphub.trochilidae.core.util.ReflectionUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -26,7 +26,7 @@ public class InterceptorFactory {
 
     public static void loadInterceptors(String[] packageNames) {
         // 获取指定包中实现了 Interceptor 接口的类
-        Set<Class<? extends Interceptor>> interceptorClasses = ReflectionUtil.getSubClass(packageNames, Interceptor.class);
+        Set<Class<? extends Interceptor>> interceptorClasses = ReflectionUtils.getSubClass(packageNames, Interceptor.class);
         // 获取被 @Aspect 标记的类
         Set<Class<?>> aspects = ClassFactory.CLASSES.get(Aspect.class);
         // 遍历所有拦截器类
@@ -38,7 +38,7 @@ public class InterceptorFactory {
             }
         });
         aspects.forEach(aClass -> {
-            Object obj = ReflectionUtil.newInstance(aClass);
+            Object obj = ReflectionUtils.newInstance(aClass);
             Interceptor interceptor = new InternallyAspectInterceptor(obj);
             if (aClass.isAnnotationPresent(Order.class)) {
                 Order order = aClass.getAnnotation(Order.class);

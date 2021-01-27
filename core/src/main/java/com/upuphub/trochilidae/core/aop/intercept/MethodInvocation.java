@@ -1,6 +1,6 @@
 package com.upuphub.trochilidae.core.aop.intercept;
 
-import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
+import com.upuphub.trochilidae.core.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 
@@ -36,6 +36,6 @@ public class MethodInvocation {
     }
 
     public Object proceed() {
-        return ReflectionUtil.executeTargetMethod(targetObject, targetMethod, args);
+        return ReflectionUtils.executeTargetMethod(targetObject, targetMethod, args);
     }
 }

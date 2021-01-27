@@ -6,7 +6,7 @@ import com.upuphub.trochilidae.core.annotation.aop.Pointcut;
 import com.upuphub.trochilidae.core.aop.lang.JoinPoint;
 import com.upuphub.trochilidae.core.aop.lang.JoinPointImpl;
 import com.upuphub.trochilidae.core.aop.util.PatternMatchUtils;
-import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
+import com.upuphub.trochilidae.core.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -52,9 +52,9 @@ public class InternallyAspectInterceptor extends Interceptor {
     public Object intercept(MethodInvocation methodInvocation) {
         JoinPoint joinPoint = new JoinPointImpl(adviceBean, methodInvocation.getTargetObject(),
                 methodInvocation.getArgs());
-        beforeMethods.forEach(method -> ReflectionUtil.executeTargetMethodNoResult(adviceBean, method, joinPoint));
+        beforeMethods.forEach(method -> ReflectionUtils.executeTargetMethodNoResult(adviceBean, method, joinPoint));
         Object result = methodInvocation.proceed();
-        afterMethods.forEach(method -> ReflectionUtil.executeTargetMethodNoResult(adviceBean, method, result, joinPoint));
+        afterMethods.forEach(method -> ReflectionUtils.executeTargetMethodNoResult(adviceBean, method, result, joinPoint));
         return result;
     }
 }

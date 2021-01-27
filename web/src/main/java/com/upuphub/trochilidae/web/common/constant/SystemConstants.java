@@ -6,6 +6,6 @@ package com.upuphub.trochilidae.web.common.constant;
  * @author Inspiration S.P.A Leo
  * @date create time 2020-11-03 22:58
  **/
-public class SystemConstants {
+public final class SystemConstants {
     public static final String LOG_PORT_BANNER = "Trochilidae Netty Http Server started on port {}. ";
 }

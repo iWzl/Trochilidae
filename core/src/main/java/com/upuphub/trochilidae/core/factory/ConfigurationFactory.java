@@ -1,11 +1,11 @@
 package com.upuphub.trochilidae.core.factory;
 
-import com.upuphub.trochilidae.core.common.util.BeanHelper;
-import com.upuphub.trochilidae.core.common.util.ReflectionUtil;
+import com.upuphub.trochilidae.core.common.BeanHelper;
 import com.upuphub.trochilidae.core.config.Configuration;
 import com.upuphub.trochilidae.core.config.ConfigurationManager;
 import com.upuphub.trochilidae.core.config.DefaultConfiguration;
 import com.upuphub.trochilidae.core.config.ResourceConfigurationPostProcess;
+import com.upuphub.trochilidae.core.util.ReflectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -38,13 +38,13 @@ public class ConfigurationFactory {
 
     private static void initResourceConfigurationPostProcessList(String[] loadPackageNames){
         Set<Class<? extends ResourceConfigurationPostProcess>> resourceConfigurationPostProcessList
-                = ReflectionUtil.getSubClass(loadPackageNames, ResourceConfigurationPostProcess.class);
+                = ReflectionUtils.getSubClass(loadPackageNames, ResourceConfigurationPostProcess.class);
         if(null != resourceConfigurationPostProcessList && 0 != resourceConfigurationPostProcessList.size()){
             for (Class<? extends ResourceConfigurationPostProcess>  resourceConfigurationPostProcessClazz: resourceConfigurationPostProcessList) {
                 ResourceConfigurationPostProcess resourceConfigurationPostProcess = (ResourceConfigurationPostProcess)
                         BeanFactory.getInstanceByClazz(resourceConfigurationPostProcessClazz);
                 if(null == resourceConfigurationPostProcess){
-                    resourceConfigurationPostProcess = ReflectionUtil.newInstance(resourceConfigurationPostProcessClazz);
+                    resourceConfigurationPostProcess = ReflectionUtils.newInstance(resourceConfigurationPostProcessClazz);
                 }
                 ConfigurationFactory.resourceConfigurationPostProcessList.add(resourceConfigurationPostProcess);
                 BeanFactory.insertBean(BeanHelper.getBeanName(resourceConfigurationPostProcessClazz),resourceConfigurationPostProcess);
