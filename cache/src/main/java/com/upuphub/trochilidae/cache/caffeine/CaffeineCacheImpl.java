@@ -36,56 +36,56 @@ public class CaffeineCacheImpl<K,V> implements com.upuphub.trochilidae.cache.Cac
 
     @Override
     public V get(K key, Function<? super K, ? extends V> mappingFunction) {
-        return null;
+        return cache.get(key,mappingFunction);
     }
 
     @Override
     public Map<K, V> getAllPresent(Iterable<?> keys) {
-        return null;
+        return cache.getAllPresent(keys);
     }
 
     @Override
     public Map<K, V> getAll(Iterable<? extends K> keys, Function<Iterable<? extends K>, Map<K, V>> mappingFunction) {
-        return null;
+        return cache.getAll(keys,mappingFunction);
     }
 
     @Override
     public void put(K key, V value) {
-
+        cache.put(key,value);
     }
 
     @Override
     public void putAll(Map<? extends K, ? extends V> map) {
-
+        cache.putAll(map);
     }
 
     @Override
     public void invalidate(Object key) {
-
+        cache.invalidate(key);
     }
 
     @Override
     public void invalidateAll(Iterable<?> keys) {
-
+        cache.invalidateAll(keys);
     }
 
     @Override
     public void invalidateAll() {
-
+        cache.invalidateAll();
     }
 
     @Override
     public long estimatedSize() {
-        return 0;
+        return cache.estimatedSize();
     }
 
     @Override
     public ConcurrentMap<K, V> asMap() {
-        return null;
+        return cache.asMap();
     }
 
     @Override
     public void cleanUp() {
-
+        cache.cleanUp();
     }
 }

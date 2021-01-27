@@ -16,7 +16,7 @@ import java.util.function.Function;
  **/
 public class GuavaCacheImpl <K,V> implements com.upuphub.trochilidae.cache.Cache<K,V> {
 
-    Cache<String, String> cache = CacheBuilder.newBuilder()
+    Cache<K, V> cache = CacheBuilder.newBuilder()
             //cache的初始容量
             .initialCapacity(5)
             //cache最大缓存数
@@ -30,7 +30,7 @@ public class GuavaCacheImpl <K,V> implements com.upuphub.trochilidae.cache.Cache
 
     @Override
     public V getIfPresent(Object key) {
-        return null;
+        return cache.getIfPresent(key);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class GuavaCacheImpl <K,V> implements com.upuphub.trochilidae.cache.Cache
 
     @Override
     public Map<K, V> getAllPresent(Iterable<?> keys) {
-        return null;
+        return cache.getAllPresent(keys);
     }
 
     @Override

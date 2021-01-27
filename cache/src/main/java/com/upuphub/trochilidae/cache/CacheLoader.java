@@ -1,4 +1,4 @@
-package com.upuphub.trochilidae.cache.factory;
+package com.upuphub.trochilidae.cache;
 
 /**
  * Cache Factory
@@ -6,5 +6,5 @@ package com.upuphub.trochilidae.cache.factory;
  * @author Inspiration S.P.A Leo
  * @date create time 2021-01-27 19:35
  **/
-public class CacheFactory {
+public final class CacheLoader {
 }
